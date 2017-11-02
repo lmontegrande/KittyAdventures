@@ -12,7 +12,7 @@ public class SideCollider : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (OnSideEnter != null)
+        if (collision.tag == "Wall" && OnSideEnter != null)
         {
             OnSideEnter.Invoke();
         }
@@ -20,7 +20,7 @@ public class SideCollider : MonoBehaviour {
 
     public void OnTriggerExit2D(Collider2D collision)
     {
-        if (OnSideExit != null)
+        if (collision.tag == "Wall" && OnSideExit != null)
         {
             OnSideExit.Invoke();
         }

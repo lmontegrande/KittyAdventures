@@ -15,7 +15,7 @@ public class Girl : PlayerControlledCharacter {
         UpdateController(PlayerController.Player1);
         foot.OnLandGround += () => { Land(); isGrounded = true; }; // Fix Bug for moving around floor tiles
         foot.OnLeaveGround += () => {  };
-        leftSideCollider.OnSideEnter += () => { isLeftTouching = true; };
+        leftSideCollider.OnSideEnter += () => { isLeftTouching = true; }; // Fix issue for tiled walls
         leftSideCollider.OnSideExit += () => { isLeftTouching = false; };
         rightSideCollider.OnSideEnter += () => { isRightTouching = true; };
         rightSideCollider.OnSideExit += () => { isRightTouching = false; };

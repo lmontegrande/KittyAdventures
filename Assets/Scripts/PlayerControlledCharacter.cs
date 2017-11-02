@@ -11,12 +11,12 @@ public class PlayerControlledCharacter : MonoBehaviour, IKillable, IHurtable
     public float moveSpeed = 5f;
     public float jumpForce = 5f;
     public PlayerController playerController = PlayerController.NONE;
+    public bool isDead = false;
 
     protected Rigidbody2D _rigidbody2D;
     protected Animator _animator;
     protected SpriteRenderer _spriteRenderer;
-
-    protected bool isDead = false;
+    
     protected bool isFacingRight = true;
 
     public void UpdateController(PlayerController p)
