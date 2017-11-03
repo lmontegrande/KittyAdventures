@@ -7,7 +7,7 @@ public class DogMovement : MonoBehaviour {
   public Transform[] patrolPoints;
   public float currentSpeed = 0.01f;
   public float timeWait = 2f;
-  public float sight = 0.5f;
+  public float sight = 1.2f;
   public float force;
   int currentPoint;
 
@@ -22,14 +22,13 @@ public class DogMovement : MonoBehaviour {
 
   void Update ()
   {
-    RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.localScale.x * Vector2.left, -sight);
+    RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.localScale.x * Vector2.right, sight + transform.position.x, 9);
 
-    Debug.Log(hit.collider.tag);
+    Debug.Log(hit.collider);
 
-    if (hit.collider != null && hit.collider.gameObject.tag == "OldDog")
+    if (hit.collider != null && hit.collider.tag == "Quad")
     {
-      Debug.Log("Force is: " + Vector3.up * force );
-      GetComponent<Rigidbody2D> ().AddForce(Vector3.right * force + (hit.collider.transform.position-transform.position) * force);
+      GetComponent<Rigidbody2D> ().AddForce(Vector3.up * force * 100 + (hit.collider.transform.position-transform.position) * force);
     }
   }
 

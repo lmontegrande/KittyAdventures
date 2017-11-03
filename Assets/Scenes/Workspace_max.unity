@@ -356,7 +356,7 @@ Rigidbody2D:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 790397011}
-  m_BodyType: 0
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -427,7 +427,7 @@ MonoBehaviour:
   - {fileID: 425492258}
   currentSpeed: 0.01
   timeWait: 2
-  sight: 0.5
+  sight: 1.2
   force: 200
 --- !u!1 &793841618
 GameObject:
