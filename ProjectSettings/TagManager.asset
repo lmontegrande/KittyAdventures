@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Floor
   - Wall
+  - Block
+  - OldDog
   layers:
   - Default
   - TransparentFX
