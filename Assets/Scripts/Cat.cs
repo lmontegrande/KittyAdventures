@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Girl : PlayerControlledCharacter {
+public class Cat : PlayerControlledCharacter
+{
 
     public FootCollider foot;
     public SideCollider leftSideCollider, rightSideCollider;
@@ -13,7 +14,7 @@ public class Girl : PlayerControlledCharacter {
     public override void Start()
     {
         foot.OnLandGround += () => { Land(); isGrounded = true; }; // Fix Bug for moving around floor tiles
-        foot.OnLeaveGround += () => {  };
+        foot.OnLeaveGround += () => { };
         leftSideCollider.OnSideEnter += () => { isLeftTouching = true; }; // Fix issue for tiled walls
         leftSideCollider.OnSideExit += () => { isLeftTouching = false; };
         rightSideCollider.OnSideEnter += () => { isRightTouching = true; };
