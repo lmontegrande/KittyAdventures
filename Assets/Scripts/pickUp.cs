@@ -23,7 +23,8 @@ public class pickUp : MonoBehaviour {
                 OnCollect.Invoke();
             Destroy(GetComponent<CircleCollider2D>());
 
-            followTarget = other.gameObject;
+            //followTarget = other.gameObject;
+            followTarget = GameObject.Find("Cat");
             StartCoroutine(LerpFollow());
 
             GetComponent<ParticleSystem>().Play();
