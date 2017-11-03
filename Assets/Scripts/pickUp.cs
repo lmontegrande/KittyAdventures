@@ -4,24 +4,44 @@ using UnityEngine;
 
 public class pickUp : MonoBehaviour {
 
-    public int soulAmnt;
+    public delegate void OnCollectHandler();
+    public OnCollectHandler OnCollect;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public AudioClip collectAudioClip;
+    public Sprite collectedSprite;
+    public GameObject container;
+    public float followDelay = .25f;
+    public float followFarRange = 5f;
 
-    public void OnTriggerEnter(Collider other)
+    private GameObject followTarget;
+
+    public void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Player")
         {
-            Destroy(other);
-            soulAmnt++;
+            if (OnCollect != null)
+                OnCollect.Invoke();
+            Destroy(GetComponent<CircleCollider2D>());
+
+            //followTarget = other.gameObject;
+            followTarget = GameObject.Find("Cat");
+            StartCoroutine(LerpFollow());
+
+            GetComponent<ParticleSystem>().Play();
+            GetComponent<AudioSource>().PlayOneShot(collectAudioClip);
+            GetComponent<SpriteRenderer>().sprite = null;
+            GetComponent<Animator>().SetBool("isCollected", true);
+        }
+    }
+
+    private IEnumerator LerpFollow()
+    {
+        while (true)
+        {
+            Vector3 deltaVector = followTarget.transform.position - container.transform.position;
+            float x = deltaVector.magnitude / followFarRange;
+            container.transform.position = Vector3.Lerp(container.transform.position, followTarget.transform.position, x);
+            yield return new WaitForSeconds(followDelay);
         }
     }
 }

@@ -5,17 +5,15 @@ using UnityEngine;
 public class Girl : PlayerControlledCharacter {
 
     public FootCollider foot;
-    public SideCollider leftSideCollider, rightSideCollider;
-    public bool isGrounded;
+    public SideCollider leftSideCollider, rightSideCollider; 
     public bool isLeftTouching;
     public bool isRightTouching;
 
     public override void Start()
     {
-        UpdateController(PlayerController.Player1);
         foot.OnLandGround += () => { Land(); isGrounded = true; }; // Fix Bug for moving around floor tiles
         foot.OnLeaveGround += () => {  };
-        leftSideCollider.OnSideEnter += () => { isLeftTouching = true; };
+        leftSideCollider.OnSideEnter += () => { isLeftTouching = true; }; // Fix issue for tiled walls
         leftSideCollider.OnSideExit += () => { isLeftTouching = false; };
         rightSideCollider.OnSideEnter += () => { isRightTouching = true; };
         rightSideCollider.OnSideExit += () => { isRightTouching = false; };
@@ -23,7 +21,7 @@ public class Girl : PlayerControlledCharacter {
         base.Start();
     }
 
-    public void Update()
+    public override void Update()
     {
         // Dead
         if (isDead)
@@ -38,6 +36,8 @@ public class Girl : PlayerControlledCharacter {
         // Handle Input
         HandleAxisInput();
         HandleButtonInput();
+
+        base.Update();
     }
 
     private void HandleAxisInput()
@@ -63,7 +63,7 @@ public class Girl : PlayerControlledCharacter {
 
         if (skillButtonPressed)
         {
-            GetHurt(1);
+
         }
     }
 }

@@ -17,8 +17,8 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
+  - Players
+  - Boundaries
   - 
   - 
   - 
@@ -44,4 +44,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2594638891
+    locked: 0
+  - name: Gameplay
+    uniqueID: 2632820959
+    locked: 0
+  - name: Foreground
+    uniqueID: 2908715561
     locked: 0
