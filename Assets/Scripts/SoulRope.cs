@@ -11,6 +11,8 @@ public class SoulRope : MonoBehaviour {
     public float yGirlSwapOffset = 1f;
     public Color ropeColor = Color.black;
     public int numRopePoints = 10;
+    public float teleportEffectLinger = 1.5f;
+    public GameObject teleportEffect;
 
     private LineRenderer _lineRenderer;
 
@@ -37,9 +39,9 @@ public class SoulRope : MonoBehaviour {
 
         for (int x=0; x<numRopePoints; x++)
         {
-            Vector2 currentDeltaVector = (deltaVector / numRopePoints) * x;
+            Vector2 currentDeltaVector = (deltaVector / (numRopePoints-1)) * x;
 
-            //Random.Range(0f,1f)
+            //Random.Range(0f,1f), Mathf.Sin((((float)x /numRopePoints) * 360) + 180), Mathf.Abs(x - (numRopePoints/2)) + Time.deltaTime
             Vector2 newPosition = Vector2.Lerp(_lineRenderer.GetPosition(x), (Vector2)girl.transform.position + currentDeltaVector, Random.Range(0f, 1f)); // Play around with this for interesting behavior
 
             _lineRenderer.SetPosition(x, newPosition);
@@ -70,11 +72,13 @@ public class SoulRope : MonoBehaviour {
         Vector2 catVelocity = cat.GetComponent<Rigidbody2D>().velocity;
         Vector2 girlVelocity = girl.GetComponent<Rigidbody2D>().velocity;
 
-        Vector2 applyCatVelocity = (Vector2)(girl.transform.position - cat.transform.position) * rubberBandingFloat;
-        Vector2 applyGirlVelocity = (Vector2)(cat.transform.position - girl.transform.position) * rubberBandingFloat;
-
-        Debug.DrawLine(cat.transform.position, cat.transform.position + (Vector3)applyCatVelocity);
-        Debug.DrawLine(girl.transform.position, girl.transform.position + (Vector3)applyGirlVelocity);
+        Vector2 catToGirlVector = girl.transform.position - cat.transform.position;
+        Vector2 girlToCatVector = cat.transform.position - girl.transform.position;
+        Vector2 applyCatVelocity = Vector2.zero;
+        Vector2 applyGirlVelocity = Vector2.zero;
+        applyCatVelocity = (Vector2)(catToGirlVector) * rubberBandingFloat;
+        applyGirlVelocity = (Vector2)(girlToCatVector) * rubberBandingFloat;
+        
 
         cat.GetComponent<Rigidbody2D>().velocity += (Vector2)Vector3.Lerp(applyCatVelocity, Vector3.zero, distanceAllowed / deltaVector.magnitude);
         girl.GetComponent<Rigidbody2D>().velocity += (Vector2)Vector3.Lerp(applyGirlVelocity, Vector3.zero, distanceAllowed / deltaVector.magnitude);
@@ -88,6 +92,8 @@ public class SoulRope : MonoBehaviour {
             temp = girl.transform.position + Vector3.up * yCatSwapOffset;
             girl.transform.position = cat.transform.position + Vector3.up * yGirlSwapOffset;
             cat.transform.position = temp;
+            Destroy(Instantiate(teleportEffect, girl.transform.position, Quaternion.identity), teleportEffectLinger);
+            Destroy(Instantiate(teleportEffect, cat.transform.position, Quaternion.identity), teleportEffectLinger);
         }
     }
 }
