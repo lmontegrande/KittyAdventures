@@ -6,8 +6,7 @@ public class Cat : PlayerControlledCharacter
 {
 
     public FootCollider foot;
-    public SideCollider leftSideCollider, rightSideCollider;
-    public bool isGrounded;
+    public SideCollider leftSideCollider, rightSideCollider; 
     public bool isLeftTouching;
     public bool isRightTouching;
 
@@ -65,8 +64,7 @@ public class Cat : PlayerControlledCharacter
 
         if (skillButtonPressed)
         {
-            //Debugging purposes
-            GetHurt(1);
+
         }
     }
 }
