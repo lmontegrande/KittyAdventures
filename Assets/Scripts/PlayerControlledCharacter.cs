@@ -31,6 +31,24 @@ public class PlayerControlledCharacter : MonoBehaviour, IKillable, IHurtable
         _spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    public virtual void Update()
+    {
+        if (Input.GetButtonDown("Pause"))
+        {
+            switch (playerController)
+            {
+                case PlayerController.Player1:
+                    UpdateController(PlayerController.Player2);
+                    break;
+                case PlayerController.Player2:
+                    UpdateController(PlayerController.Player1);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     protected virtual void Move(Vector2 direction)
 
     {

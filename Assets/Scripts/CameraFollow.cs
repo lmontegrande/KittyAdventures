@@ -10,17 +10,19 @@ public class CameraFollow : MonoBehaviour {
 
     private GameObject[] players;
     private Vector3 startingPosition;
+    private float startingOrthoSize;
     private Camera _camera;
 
     public void Start()
     {
-        startingPosition = transform.position; 
+        _camera = GetComponent<Camera>();
+        startingPosition = transform.position;
+        startingOrthoSize = _camera.orthographicSize;
     }
 
 	public void Update()
     {
         players = GameObject.FindGameObjectsWithTag("Player");
-        _camera = GetComponent<Camera>();
 
         Vector3 targetPosition = new Vector3();
         int aliveSize = 0;
@@ -36,7 +38,8 @@ public class CameraFollow : MonoBehaviour {
 
         if (aliveSize <= 0) return;
 
-        targetPosition = Vector3.Lerp(gameObject.transform.position, targetPosition / aliveSize, lerpFactor);
+        targetPosition = targetPosition / aliveSize;
+        //targetPosition = Vector3.Lerp(gameObject.transform.position, targetPosition / aliveSize, lerpFactor);
 
         if (players.Length >= 2)
         {
@@ -50,11 +53,10 @@ public class CameraFollow : MonoBehaviour {
             }
 
             // Fix Camera Scaling for multiple characters
-            Debug.Log(deltaVector + " " + deltaVector.magnitude);
             _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, (Mathf.Clamp(deltaVector.magnitude, minOrthographicSize, Mathf.Infinity)), Time.deltaTime);
         } else {
             _camera.orthographicSize = Mathf.Lerp(_camera.orthographicSize, minOrthographicSize, Time.deltaTime);
         }
-        gameObject.transform.position = new Vector3(targetPosition.x, Mathf.Clamp(targetPosition.y, startingPosition.y, 1000), gameObject.transform.position.z);
+        gameObject.transform.position = new Vector3(targetPosition.x, Mathf.Clamp(targetPosition.y, startingPosition.y, Mathf.Infinity) + ((_camera.orthographicSize - startingOrthoSize) * 1), gameObject.transform.position.z);
     }
 }
