@@ -18,7 +18,8 @@ public class doorSwitch : MonoBehaviour {
     {
         if(collision.tag == "Player")
         {
-            this.GetComponent<BoxCollider2D>.enabled = false;
+            this.GetComponent<BoxCollider2D>().enabled = false;
+
         }
     }
 }
