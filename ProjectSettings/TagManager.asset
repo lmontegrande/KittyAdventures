@@ -7,6 +7,7 @@ TagManager:
   - Floor
   - Wall
   - Door
+  - Switch
   layers:
   - Default
   - TransparentFX

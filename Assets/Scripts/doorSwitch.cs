@@ -6,7 +6,7 @@ public class doorSwitch : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+
 	}
 	
 	// Update is called once per frame
@@ -16,9 +16,13 @@ public class doorSwitch : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.tag == "Player")
+        //Debug.Log(collision);
+        if(collision.gameObject.CompareTag("Player"))
         {
-            this.GetComponent<BoxCollider2D>().enabled = false;
+            Debug.Log(collision);
+            //collision.GetComponent<BoxCollider2D>().enabled = false;
+            this.gameObject.SetActive(false);
+            GameObject.FindGameObjectWithTag("Door").SetActive(false);
 
         }
     }
