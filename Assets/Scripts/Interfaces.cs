@@ -10,3 +10,8 @@ public interface IKillable
 {
     void Die();
 }
+
+public interface IPausable
+{
+    void Pause();
+}
