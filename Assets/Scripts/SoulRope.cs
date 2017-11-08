@@ -86,7 +86,7 @@ public class SoulRope : MonoBehaviour {
     
     private void HandleInput()
     {
-        if (Input.GetButtonDown("Skill"))
+        if (Input.GetButtonDown("Swap"))
         {
             Vector3 temp;
             temp = girl.transform.position + Vector3.up * yCatSwapOffset;

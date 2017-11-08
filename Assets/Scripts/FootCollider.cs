@@ -10,7 +10,7 @@ public class FootCollider : MonoBehaviour {
     public OnLeaveGroundHandle OnLeaveGround;
     public OnLandGroundHandle OnLandGround;
 
-    public void OnTriggerStay2D(Collider2D other) {
+    public void OnTriggerEnter2D(Collider2D other) {
         if ((other.tag == "Floor") && OnLandGround != null)
         {
             OnLandGround.Invoke();
