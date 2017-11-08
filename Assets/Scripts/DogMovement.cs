@@ -22,7 +22,7 @@ public class DogMovement : MonoBehaviour {
 
   void Update ()
   {
-    RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.localScale.x * Vector2.right, sight + transform.position.x, 9);
+    RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.localScale.x * Vector2.right, sight, 8);
 
     Debug.Log(hit.collider);
 
