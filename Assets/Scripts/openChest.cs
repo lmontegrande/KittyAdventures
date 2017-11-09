@@ -5,6 +5,7 @@ using UnityEngine;
 public class openChest : MonoBehaviour {
 
     public Sprite openSprite;
+    public bool chestIsOpen = false;
 	// Use this for initialization
 	void Start () {
 		
@@ -12,6 +13,11 @@ public class openChest : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+        if(chestIsOpen == true)
+        {
+
+        }
 		
 	}
 
@@ -22,7 +28,7 @@ public class openChest : MonoBehaviour {
         if (collision.gameObject.CompareTag("Player"))
         {
             transform.GetComponent<SpriteRenderer>().sprite = openSprite;
-            //GameObject.FindGameObjectWithTag("Door").GetComponent<BoxCollider2D>().enabled = false;
+            chestIsOpen = true;
 
         }
     }
