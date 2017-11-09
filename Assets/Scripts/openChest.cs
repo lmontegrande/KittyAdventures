@@ -5,7 +5,7 @@ using UnityEngine;
 public class openChest : MonoBehaviour {
 
     public Sprite openSprite;
-    public bool chestIsOpen = false;
+    public bool chestIsOpen;
 	// Use this for initialization
 	void Start () {
 		
@@ -13,11 +13,6 @@ public class openChest : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
-        if(chestIsOpen == true)
-        {
-
-        }
 		
 	}
 
