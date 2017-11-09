@@ -35,6 +35,9 @@ public class NarrativeManager : MonoBehaviour {
 
     public IEnumerator Play(List<NarrativeInstance> scene)
     {
+        // Pause Game
+        GameManager.instance.Pause();
+
         // Fade In
         float fadeTimer = 0;
         while (fadeTimer < fadeTime)
@@ -73,5 +76,8 @@ public class NarrativeManager : MonoBehaviour {
             yield return null;
         }
         miniFadeImage.color = Color.clear;
+
+        // Unpause Game
+        GameManager.instance.UnPause();
     }
 }

@@ -10,7 +10,7 @@ public class SideCollider : MonoBehaviour {
     public OnSideEnterHandle OnSideEnter;
     public OnSideExitHandle OnSideExit;
 
-    public void OnTriggerEnter2D(Collider2D collision)
+    public void OnTriggerStay2D(Collider2D collision)
     {
         if (collision.tag == "Wall" && OnSideEnter != null)
         {

@@ -4,14 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
-    public enum GameState
-    {
-        Start, Pause, Play
-    }
-
     public static GameManager instance;
 
-    private GameState _currentGameState;
+    public List<Character> characters;
 
     public void Awake()
     {
@@ -23,6 +18,13 @@ public class GameManager : MonoBehaviour {
 
     public void Pause()
     {
-        
+        foreach (Character character in characters)
+            character.Pause();
+    }
+
+    public void UnPause()
+    {
+        foreach (Character character in characters)
+            character.UnPause();
     }
 }
