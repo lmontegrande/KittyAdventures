@@ -22,9 +22,9 @@ public class doorSwitch : MonoBehaviour {
         {
             Debug.Log(collision);
             //collision.GetComponent<BoxCollider2D>().enabled = false;
-            this.gameObject.SetActive(false);
+            //this.gameObject.SetActive(true);
             transform.GetComponent<SpriteRenderer>().sprite = downSwitch;
-            GameObject.FindGameObjectWithTag("Door").SetActive(false);
+            GameObject.FindGameObjectWithTag("Door").GetComponent<BoxCollider2D>().enabled = false;
         
         }
     }
