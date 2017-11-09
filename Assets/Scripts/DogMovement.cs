@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DogMovement : MonoBehaviour {
-
+public class DogMovement : Character
+{
   public Transform[] patrolPoints;
   public float currentSpeed = 0.01f;
   public float timeWait = 2f;
@@ -11,10 +11,18 @@ public class DogMovement : MonoBehaviour {
   public float force;
   int currentPoint;
 
+  string dogState = "patrol";  // bark, kill
+
   Animator anim;
+
+  public override void Pause()
+  {
+
+  }
 
   void Start ()
   {
+    dogState = "patrol";
     anim = GetComponent<Animator> ();
     StartCoroutine ("Patrol");
     anim.SetBool("Running", true);
@@ -22,13 +30,31 @@ public class DogMovement : MonoBehaviour {
 
   void Update ()
   {
-    RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.localScale.x * Vector2.right, sight, 8);
+    RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.localScale.x * Vector2.right, sight, 1 << LayerMask.NameToLayer("Player"));
 
-    Debug.Log(hit.collider);
+    // Debug.Log(hit.collider.name == "Quad");
 
-    if (hit.collider != null && hit.collider.tag == "Quad")
+    if (hit.collider != null && hit.collider.name == "Quad")
     {
-      GetComponent<Rigidbody2D> ().AddForce(Vector3.up * force * 100 + (hit.collider.transform.position-transform.position) * force);
+      GetComponent<Rigidbody2D>().AddForce(Vector3.up * force * 30 + (hit.collider.transform.position-transform.position) * force);
+      // Debug.Log(dogState);
+      // if (dogState == "patrol")
+      // {
+      //   anim.SetBool("Running", false);
+      //   GetComponent<Rigidbody2D>().AddForce(Vector3.up * force * 30 + (hit.collider.transform.position-transform.position) * force);
+      //   dogState = "bark";
+      // }
+      // else if (dogState == "bark")
+      // {
+      //   if (true) // wait for 3s
+      //   {
+      //     dogState = "bark";
+      //   }
+      // }
+      // else if (dogState == "kill")
+      // {
+      //   dogState = "patrol";
+      // }
     }
   }
 
