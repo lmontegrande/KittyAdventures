@@ -57,23 +57,32 @@ public class SoulRope : MonoBehaviour {
     private void HandlePhysics()
     {
         Vector2 deltaVector = cat.transform.position - girl.transform.position;
-        float scalar = 2f; 
-
-        if (deltaVector.magnitude < distanceAllowed)
-        {
-            cat.GetComponent<Cat>().tetherIsPulling = false;
-            girl.GetComponent<Girl>().tetherIsPulling = false;
-            return;
-        }
-
-        cat.GetComponent<Cat>().tetherIsPulling = true;
-        girl.GetComponent<Girl>().tetherIsPulling = true;
 
         Vector2 catVelocity = cat.GetComponent<Rigidbody2D>().velocity;
         Vector2 girlVelocity = girl.GetComponent<Rigidbody2D>().velocity;
 
         Vector2 catToGirlVector = girl.transform.position - cat.transform.position;
         Vector2 girlToCatVector = cat.transform.position - girl.transform.position;
+
+        //if (deltaVector.magnitude < distanceAllowed)
+        //{
+        //    cat.GetComponent<Cat>().tetherIsPulling = false;
+        //    girl.GetComponent<Girl>().tetherIsPulling = false;
+        //    return;
+        //}
+        //cat.GetComponent<Cat>().tetherIsPulling = true;
+        //girl.GetComponent<Girl>().tetherIsPulling = true;
+
+        //if (catToGirlVector.y >= distanceAllowed/2)
+        //    cat.GetComponent<PlayerControlledCharacter>().isBeingPulledUp = true; 
+        //else
+        //    cat.GetComponent<PlayerControlledCharacter>().isBeingPulledUp = false;
+
+        //if (girlToCatVector.y >= distanceAllowed/2)
+        //    girl.GetComponent<PlayerControlledCharacter>().isBeingPulledUp = true;
+        //else
+        //    girl.GetComponent<PlayerControlledCharacter>().isBeingPulledUp = false;
+
         Vector2 applyCatVelocity = Vector2.zero;
         Vector2 applyGirlVelocity = Vector2.zero;
         applyCatVelocity = (Vector2)(catToGirlVector) * rubberBandingFloat;
