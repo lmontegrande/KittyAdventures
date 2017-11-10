@@ -20,6 +20,8 @@ public class SoulRope : MonoBehaviour {
     {
         _lineRenderer = GetComponent<LineRenderer>();
         _lineRenderer.positionCount = numRopePoints;
+        cat.GetComponent<Cat>().usePull += HandlePhysics;
+        cat.GetComponent<Cat>().releasePull += LetGo;
     }
 
     public void Update()
@@ -30,7 +32,7 @@ public class SoulRope : MonoBehaviour {
 
     public void LateUpdate()
     {
-        HandlePhysics(); 
+        //HandlePhysics(); 
     }
 
     private void DrawRope()
@@ -89,8 +91,16 @@ public class SoulRope : MonoBehaviour {
         applyGirlVelocity = (Vector2)(girlToCatVector) * rubberBandingFloat;
         
 
-        cat.GetComponent<Rigidbody2D>().velocity += (Vector2)Vector3.Lerp(applyCatVelocity, Vector3.zero, distanceAllowed / deltaVector.magnitude);
+        //cat.GetComponent<Rigidbody2D>().velocity += (Vector2)Vector3.Lerp(applyCatVelocity, Vector3.zero, distanceAllowed / deltaVector.magnitude);
         girl.GetComponent<Rigidbody2D>().velocity += (Vector2)Vector3.Lerp(applyGirlVelocity, Vector3.zero, distanceAllowed / deltaVector.magnitude);
+        girl.GetComponent<PlayerControlledCharacter>().isBeingPulled = true;
+    }
+
+    private void LetGo()
+    {
+        girl.GetComponent<PlayerControlledCharacter>().isBeingPulled = false;
+        girl.transform.rotation = Quaternion.identity;
+        //girl.transform.position += Vector3.up;
     }
     
     private void HandleInput()

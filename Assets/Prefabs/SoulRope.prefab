@@ -54,10 +54,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cat: {fileID: 0}
   girl: {fileID: 0}
-  distanceAllowed: 10
-  rubberBandingFloat: 5
-  yCatSwapOffset: -0.5
-  yGirlSwapOffset: 1
+  distanceAllowed: 4
+  rubberBandingFloat: 2
+  yCatSwapOffset: 0
+  yGirlSwapOffset: 0
   ropeColor: {r: 0, g: 0, b: 0, a: 1}
   numRopePoints: 10
   teleportEffectLinger: 2
@@ -102,7 +102,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 2
-    widthMultiplier: 0.25
+    widthMultiplier: 0.1
     widthCurve:
       serializedVersion: 2
       m_Curve:

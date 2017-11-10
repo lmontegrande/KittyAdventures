@@ -22,13 +22,15 @@ public abstract class PlayerControlledCharacter : Character
     public FootCollider foot;
     public SideCollider leftSideCollider, rightSideCollider;
     public bool isTouchingladder = false;
+    public bool isBeingPulled = false;
+    public bool isBeingHeld = false;
 
     private bool isLeftTouching;
     private bool isRightTouching;
     private bool isFacingRight = true;
     private bool isGrounded;
     private bool isGamePaused = false;
-    public bool isClimbing = false;
+    public bool isClimbing = false;    
 
     public void UpdateController(PlayerController p)
     {
@@ -53,12 +55,19 @@ public abstract class PlayerControlledCharacter : Character
 
     public void Update()
     {
-        // Dead
-        if (isDead || isGamePaused || playerController == PlayerController.NONE)
-            return;
+        if (isBeingPulled)
+            _rigidbody2D.freezeRotation = false;
+        else
+            _rigidbody2D.freezeRotation = true;
 
-        HandleAxisInput();
-        HandleButtonInput();
+        // Dead
+        if (!(isBeingHeld || isDead || isGamePaused || playerController == PlayerController.NONE))
+        {
+            HandleAxisInput();
+            HandleButtonInput();
+        }
+
+        _rigidbody2D.velocity = Vector2.ClampMagnitude(_rigidbody2D.velocity, jumpForce);
     }
 
     public void GetHurt(int damage)
@@ -90,17 +99,17 @@ public abstract class PlayerControlledCharacter : Character
     private void HandleButtonInput()
     {
         bool jumpButtonPressed = Input.GetButtonDown(playerController.ToString() + "_Jump");
-        bool skillButtonPressed = Input.GetButtonDown(playerController.ToString() + "_Skill");
+        bool skillButtonPressed = Input.GetButton(playerController.ToString() + "_Skill");
+        bool skillButtonReleased = Input.GetButtonUp(playerController.ToString() + "_Skill");
         bool pauseButtonPressed = Input.GetButtonDown("Pause");
-        if (jumpButtonPressed && isGrounded)
-        {             
-            Jump();
-        }
 
+        if (jumpButtonPressed && isGrounded)    
+            Jump();
         if (skillButtonPressed)
-        {
             UseSkill();
-        }
+        if (skillButtonReleased)
+            ReleaseSkill();
+
         if (pauseButtonPressed)
         {
             switch (playerController)
@@ -174,13 +183,15 @@ public abstract class PlayerControlledCharacter : Character
             }
         }
 
-        if (isGrounded)
+        if (!isBeingPulled)
             _rigidbody2D.velocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.velocity.y);
-        else
-        {
-            _rigidbody2D.velocity += new Vector2(direction.x * moveSpeed, 0);
-            _rigidbody2D.velocity = new Vector2(Mathf.Clamp(_rigidbody2D.velocity.x, -moveSpeed, moveSpeed), _rigidbody2D.velocity.y);
-        }
+        //if (isGrounded)
+        //    _rigidbody2D.velocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.velocity.y);
+        //else
+        //{
+        //    _rigidbody2D.velocity += new Vector2(direction.x * moveSpeed, 0);
+        //    _rigidbody2D.velocity = new Vector2(Mathf.Clamp(_rigidbody2D.velocity.x, -moveSpeed, moveSpeed), _rigidbody2D.velocity.y);
+        //}
     }
 
     private void HandleClimbing(Vector2 direction)
@@ -203,4 +214,6 @@ public abstract class PlayerControlledCharacter : Character
     public abstract void LadderEnter(bool isEnter);
 
     protected abstract void UseSkill();
+
+    protected abstract void ReleaseSkill();
 }
