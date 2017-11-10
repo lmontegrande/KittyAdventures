@@ -382,7 +382,7 @@ MonoBehaviour:
   isTouchingladder: 0
   isBeingPulled: 0
   isBeingHeld: 0
-  isClimbing: 0
+  isBeingThrown: 0
 --- !u!114 &114626310756101882
 MonoBehaviour:
   m_ObjectHideFlags: 1
