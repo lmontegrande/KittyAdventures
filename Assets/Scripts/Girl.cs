@@ -16,8 +16,8 @@ public class Girl : PlayerControlledCharacter
 
     public override void Start()
     {
-        cat = GameObject.Find("Cat").GetComponent<Cat>();
         base.Start();
+        cat = GameObject.Find("Cat").GetComponent<Cat>();
     }
 
     public override void Update()

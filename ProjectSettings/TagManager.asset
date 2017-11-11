@@ -9,6 +9,7 @@ TagManager:
   - Door
   - Switch
   - Chest
+  - Ledge
   layers:
   - Default
   - TransparentFX
@@ -20,7 +21,7 @@ TagManager:
   - 
   - Players
   - Boundaries
-  - 
+  - Background
   - 
   - 
   - 

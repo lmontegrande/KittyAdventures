@@ -119,7 +119,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1560077889843858}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -32.55, y: -2.242, z: 0}
+  m_LocalPosition: {x: 2.3858337, y: 0.71231854, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4908149785224638}
@@ -373,6 +373,7 @@ MonoBehaviour:
   climbingSpeed: 5
   jumpForce: 13
   airControl: 5
+  ledgeClimbTime: 1
   playerController: 1
   isDead: 0
   isSpritesFlipped: 1
@@ -383,6 +384,7 @@ MonoBehaviour:
   isBeingPulled: 0
   isBeingHeld: 0
   isBeingThrown: 0
+  isLedgeClimbing: 0
 --- !u!114 &114626310756101882
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -427,7 +429,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1662146337
   m_SortingLayer: 2
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: cd9a3aac1ce790440b1e51403cf417ea, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

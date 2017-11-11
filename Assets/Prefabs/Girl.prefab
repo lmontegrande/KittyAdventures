@@ -188,7 +188,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1941956852560472}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -34.997, y: -1.7019998, z: 0}
+  m_LocalPosition: {x: -1.4446989, y: 0.59270644, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4181795736044920}
@@ -246,7 +246,7 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.2}
+  m_Offset: {x: 0, y: -0.11}
   serializedVersion: 2
   m_Radius: 0.25
 --- !u!61 &61012993483080710
@@ -407,6 +407,7 @@ MonoBehaviour:
   climbingSpeed: 5
   jumpForce: 10
   airControl: 5
+  ledgeClimbTime: 1
   playerController: 0
   isDead: 0
   isSpritesFlipped: 0
@@ -417,6 +418,7 @@ MonoBehaviour:
   isBeingPulled: 0
   isBeingHeld: 0
   isBeingThrown: 0
+  isLedgeClimbing: 0
   throwStrength: 20
   grabDistance: 1.5
 --- !u!114 &114211045188531030

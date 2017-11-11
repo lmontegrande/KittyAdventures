@@ -54,10 +54,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cat: {fileID: 0}
   girl: {fileID: 0}
-  distanceAllowed: 4
+  distanceAllowed: 10
   rubberBandingFloat: 2
   yCatSwapOffset: 0
   yGirlSwapOffset: 0
+  percentHideRope: 0.715
   ropeColor: {r: 0, g: 0, b: 0, a: 1}
   numRopePoints: 10
   teleportEffectLinger: 2

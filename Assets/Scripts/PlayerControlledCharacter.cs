@@ -12,6 +12,7 @@ public abstract class PlayerControlledCharacter : Character
     public float climbingSpeed = 5f;
     public float jumpForce = 5f;
     public float airControl = 2f;
+    public float ledgeClimbTime = 1f;
     public PlayerController playerController = PlayerController.NONE;
     public bool isDead = false;
     public bool isSpritesFlipped = false;
@@ -25,20 +26,21 @@ public abstract class PlayerControlledCharacter : Character
     public bool isBeingPulled = false;
     public bool isBeingHeld = false;
     public bool isBeingThrown = false;
+    public bool isLedgeClimbing = false;
 
     private bool isLeftTouching;
     private bool isRightTouching;
     private bool isFacingRight = true;
     private bool isGrounded;
     private bool isGamePaused = false;
-    private bool isClimbing = false;    
+    private bool isLadderClimbing = false;    
 
     public void UpdateController(PlayerController p)
     {
         playerController = p;
     }
 
-    public override void Start()
+    public virtual void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
@@ -48,10 +50,12 @@ public abstract class PlayerControlledCharacter : Character
         foot.OnLeaveGround += () => { isGrounded = false; };
         leftSideCollider.OnSideEnter += () => { isLeftTouching = true; }; // Fix issue for tiled walls
         leftSideCollider.OnSideExit += () => { isLeftTouching = false; };
+        leftSideCollider.OnLedgeEnter += HandleLedge;
         rightSideCollider.OnSideEnter += () => { isRightTouching = true; };
         rightSideCollider.OnSideExit += () => { isRightTouching = false; };
+        rightSideCollider.OnLedgeEnter += HandleLedge;
 
-        base.Start();
+        //base.Start();
     }
 
     public virtual void Update()
@@ -59,7 +63,7 @@ public abstract class PlayerControlledCharacter : Character
 
         HandlePlayerSwitch();
         
-        if (!(isBeingHeld || isBeingThrown || isDead || isGamePaused || playerController == PlayerController.NONE))
+        if (!(isLedgeClimbing || isBeingHeld || isBeingThrown || isDead || isGamePaused || playerController == PlayerController.NONE))
         {
             HandleAxisInput();
             HandleButtonInput();
@@ -81,6 +85,7 @@ public abstract class PlayerControlledCharacter : Character
         isDead = true;
         _animator.SetBool("isDead", true);
         _rigidbody2D.velocity = Vector2.zero;
+        GameManager.instance.GameOver();
     }
 
     public override void Pause()
@@ -138,18 +143,20 @@ public abstract class PlayerControlledCharacter : Character
         {
             if (axisInput.y > 0)
             {
-                isClimbing = true;
+                isLadderClimbing = true;
+                _animator.SetBool("isClimbing", true);
                 _rigidbody2D.gravityScale = 0;
             }
         }
         else
         {
-            isClimbing = false;
+            isLadderClimbing = false;
+            _animator.SetBool("isClimbing", false);
             _rigidbody2D.gravityScale = 4;
         }
 
-        if (isClimbing)
-            HandleClimbing(axisInput);
+        if (isLadderClimbing)
+            HandleLadder(axisInput);
         else
             Move(axisInput);
     }
@@ -194,9 +201,40 @@ public abstract class PlayerControlledCharacter : Character
         //}
     }
 
-    private void HandleClimbing(Vector2 direction)
+    private void HandleLadder(Vector2 direction)
     {
         _rigidbody2D.velocity = new Vector2(direction.x, direction.y) * climbingSpeed;
+    }
+
+    private void HandleLedge(GameObject ledgeTile)
+    {
+        Vector2 axisInput = new Vector2(Input.GetAxisRaw(playerController.ToString() + "_Horizontal"), Input.GetAxisRaw(playerController.ToString() + "_Vertical"));
+        if (isGrounded) return;
+        if (ledgeTile.transform.position.x > transform.position.x && axisInput.x > 0)
+            StartCoroutine(LedgeClimb(ledgeTile));
+        if (ledgeTile.transform.position.x < transform.position.x && axisInput.x < 0)
+            StartCoroutine(LedgeClimb(ledgeTile));
+    }
+
+    private IEnumerator LedgeClimb(GameObject target)
+    {
+        if (!isLedgeClimbing)
+        {
+            isLedgeClimbing = true;
+            float timer = 0;
+            Vector3 startingPosition = transform.position;
+            _animator.SetBool("isClimbing", true);
+            while (timer < ledgeClimbTime)
+            {
+                timer += Time.deltaTime;
+                ////transform.Rotate(new Vector3(0, 0, 360 * (timer / ledgeClimbTime)));
+                transform.position = Vector3.Lerp(target.transform.position, target.transform.position + Vector3.up, 0);
+                yield return null;
+            }
+            _animator.SetBool("isClimbing", false);
+            transform.position = target.transform.position + Vector3.up;
+            isLedgeClimbing = false;
+        }
     }
 
     private void Jump()
@@ -208,7 +246,7 @@ public abstract class PlayerControlledCharacter : Character
     private void Land()
     {
         _animator.SetBool("isJumping", false);
-        isClimbing = false;
+        isLadderClimbing = false;
         isBeingThrown = false;
     }
 
