@@ -103,7 +103,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1032606458222142}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 26.075806, y: 3.5838609, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224131177992475040}
@@ -249,7 +249,8 @@ MonoBehaviour:
   isPlayInOrder: 1
   backgroundFadeInTime: 1
   characterFadeInTime: 1
-  TextFadeInTime: 1
+  textFadeInTime: 1
+  fadeOutTime: 1
   narrativeCanvas: {fileID: 1767557070678796}
   backGroundImage: {fileID: 114194000726948534}
   characterImage: {fileID: 114763729296943512}

@@ -1,6 +1,10 @@
 fileFormatVersion: 2
 guid: 4c84dafd77e6bf4498b3f03f45d3b41a
+<<<<<<< HEAD
 timeCreated: 1510299828
+=======
+timeCreated: 1510387057
+>>>>>>> c0b73178d5711c0ab7cc43c1bbb003bff53ecb09
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -8,6 +12,12 @@ TextureImporter:
     21300002: girl_idle_spritesheet_1
     21300004: girl_idle_spritesheet_2
     21300006: girl_idle_spritesheet_3
+<<<<<<< HEAD
+=======
+    21300008: girl_idle_spritesheet_4
+    21300010: girl_idle_spritesheet_5
+    21300012: girl_idle_spritesheet_6
+>>>>>>> c0b73178d5711c0ab7cc43c1bbb003bff53ecb09
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -78,6 +88,27 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+<<<<<<< HEAD
+=======
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+>>>>>>> c0b73178d5711c0ab7cc43c1bbb003bff53ecb09
   - buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -94,12 +125,21 @@ TextureImporter:
       name: girl_idle_spritesheet_0
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 0
         y: 420
         width: 300
         height: 400
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+=======
+        x: 55
+        y: 429
+        width: 143
+        height: 349
+      alignment: 9
+      pivot: {x: 0.49510333, y: 0.4919745}
+>>>>>>> c0b73178d5711c0ab7cc43c1bbb003bff53ecb09
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -108,12 +148,21 @@ TextureImporter:
       name: girl_idle_spritesheet_1
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 300
         y: 420
         width: 300
         height: 400
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+=======
+        x: 193
+        y: 736
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+>>>>>>> c0b73178d5711c0ab7cc43c1bbb003bff53ecb09
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -122,12 +171,21 @@ TextureImporter:
       name: girl_idle_spritesheet_2
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 600
         y: 420
         width: 300
         height: 400
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+=======
+        x: 363
+        y: 428
+        width: 143
+        height: 344
+      alignment: 9
+      pivot: {x: 0.5073449, y: 0.5030532}
+>>>>>>> c0b73178d5711c0ab7cc43c1bbb003bff53ecb09
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -136,16 +194,68 @@ TextureImporter:
       name: girl_idle_spritesheet_3
       rect:
         serializedVersion: 2
+<<<<<<< HEAD
         x: 0
         y: 0
         width: 300
         height: 400
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
+=======
+        x: 675
+        y: 428
+        width: 143
+        height: 349
+      alignment: 9
+      pivot: {x: 0.49309534, y: 0.49434158}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
+    - serializedVersion: 2
+      name: girl_idle_spritesheet_4
+      rect:
+        serializedVersion: 2
+        x: 813
+        y: 736
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: girl_idle_spritesheet_5
+      rect:
+        serializedVersion: 2
+        x: 55
+        y: 18
+        width: 143
+        height: 352
+      alignment: 9
+      pivot: {x: 0.49083704, y: 0.49255502}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: girl_idle_spritesheet_6
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 248
+        width: 84
+        height: 84
+      alignment: 0
+      pivot: {x: 0, y: 0}
+>>>>>>> c0b73178d5711c0ab7cc43c1bbb003bff53ecb09
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+<<<<<<< HEAD
     outline:
     - - {x: -285, y: -57}
       - {x: -315, y: -47}
@@ -764,6 +874,10 @@ TextureImporter:
       - {x: 324, y: 24}
       - {x: 324, y: 48}
       - {x: 328, y: 63}
+=======
+    outline: []
+    physicsShape: []
+>>>>>>> c0b73178d5711c0ab7cc43c1bbb003bff53ecb09
   spritePackingTag: 
   userData: 
   assetBundleName: 

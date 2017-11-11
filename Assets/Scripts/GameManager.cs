@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -26,5 +27,15 @@ public class GameManager : MonoBehaviour {
     {
         foreach (Character character in characters)
             character.UnPause();
+    }
+
+    public void GameOver()
+    {
+        LoadLevel(SceneManager.GetActiveScene().name);
+    }
+
+    public void LoadLevel(string levelName)
+    {
+        SceneManager.LoadScene(levelName);
     }
 }

@@ -24,8 +24,8 @@ public class pickUp : MonoBehaviour {
             Destroy(GetComponent<CircleCollider2D>());
 
             //followTarget = other.gameObject;
-            followTarget = GameObject.Find("Cat");
-            StartCoroutine(LerpFollow());
+            //followTarget = GameObject.Find("Cat");
+            //StartCoroutine(LerpFollow());
 
             GetComponent<ParticleSystem>().Play();
             GetComponent<AudioSource>().PlayOneShot(collectAudioClip);

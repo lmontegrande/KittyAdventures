@@ -11,7 +11,7 @@ public class FootCollider : MonoBehaviour {
     public OnLandGroundHandle OnLandGround;
 
     public void OnTriggerStay2D(Collider2D other) {
-        if ((other.tag == "Floor") && OnLandGround != null)
+        if ((other.tag == "Floor" || other.tag == "Ledge") && OnLandGround != null)
         {
             OnLandGround.Invoke();
         }
@@ -19,7 +19,7 @@ public class FootCollider : MonoBehaviour {
 
     public void OnTriggerExit2D(Collider2D other)
     {
-        if ((other.tag == "Floor") && OnLeaveGround != null)
+        if ((other.tag == "Floor" || other.tag == "Ledge") && OnLeaveGround != null)
         {
             OnLeaveGround.Invoke();
         }
