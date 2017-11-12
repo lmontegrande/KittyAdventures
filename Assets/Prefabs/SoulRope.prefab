@@ -58,12 +58,13 @@ MonoBehaviour:
   rubberBandingFloat: 2
   yCatSwapOffset: 0
   yGirlSwapOffset: 0
-  percentHideRope: 0.715
+  percentHideRope: 0
   ropeColor: {r: 0, g: 0, b: 0, a: 1}
   numRopePoints: 10
   teleportEffectLinger: 2
   teleportEffect: {fileID: 1081222832489172, guid: 937b37100452cb04b8aeb22fa447b3da,
     type: 2}
+  letGoYOffset: 0
 --- !u!120 &120543604287751428
 LineRenderer:
   m_ObjectHideFlags: 1

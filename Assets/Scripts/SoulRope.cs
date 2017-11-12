@@ -85,7 +85,7 @@ public class SoulRope : MonoBehaviour {
 
         //girl.GetComponent<Rigidbody2D>().velocity += (Vector2)Vector3.Lerp(applyGirlVelocity, Vector3.zero, distanceAllowed / deltaVector.magnitude);
         girl.GetComponent<Rigidbody2D>().velocity += applyGirlVelocity;
-        girl.GetComponent<PlayerControlledCharacter>().isBeingPulled = true;
+        girl.GetComponent<Girl>().isBeingPulled = true;
     }
 
     private void LetGo()
@@ -128,10 +128,17 @@ public class SoulRope : MonoBehaviour {
     {
         if (Input.GetButtonDown("Swap"))
         {
-            Vector3 temp;
-            temp = girl.transform.position + Vector3.up * yCatSwapOffset;
+            Vector3 tempVector;
+            tempVector = girl.transform.position + Vector3.up * yCatSwapOffset;
             girl.transform.position = cat.transform.position + Vector3.up * yGirlSwapOffset;
-            cat.transform.position = temp;
+            cat.transform.position = tempVector;
+            tempVector = girl.GetComponent<Rigidbody2D>().velocity;
+            girl.GetComponent<Rigidbody2D>().velocity = cat.GetComponent<Rigidbody2D>().velocity;
+            cat.GetComponent<Rigidbody2D>().velocity = tempVector;
+            bool tempBool;
+            tempBool = cat.GetComponent<Cat>().isBeingThrown;
+            cat.GetComponent<Cat>().isBeingThrown = girl.GetComponent<Girl>().isBeingThrown;
+            girl.GetComponent<Girl>().isBeingThrown = tempBool;
             Destroy(Instantiate(teleportEffect, girl.transform.position, Quaternion.identity), teleportEffectLinger);
             Destroy(Instantiate(teleportEffect, cat.transform.position, Quaternion.identity), teleportEffectLinger);
         }
