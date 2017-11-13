@@ -1,19 +1,12 @@
 fileFormatVersion: 2
 guid: f655bb43a3e15584d89145d39285f076
-<<<<<<< HEAD
-timeCreated: 1510301492
-=======
-timeCreated: 1510387558
->>>>>>> c0b73178d5711c0ab7cc43c1bbb003bff53ecb09
+timeCreated: 1510453250
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: girl_walk_spritesheet_0
     21300002: girl_walk_spritesheet_1
-<<<<<<< HEAD
-=======
     21300004: girl_walk_spritesheet_2
->>>>>>> c0b73178d5711c0ab7cc43c1bbb003bff53ecb09
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -84,8 +77,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
-<<<<<<< HEAD
-=======
   - buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -104,7 +95,6 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
->>>>>>> c0b73178d5711c0ab7cc43c1bbb003bff53ecb09
   - buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -121,21 +111,12 @@ TextureImporter:
       name: girl_walk_spritesheet_0
       rect:
         serializedVersion: 2
-<<<<<<< HEAD
-        x: 0
-        y: 10
-        width: 300
-        height: 400
-      alignment: 0
-      pivot: {x: 0, y: 0}
-=======
         x: 55
         y: 28
         width: 143
         height: 339
       alignment: 9
-      pivot: {x: 0.50238395, y: 0.5048801}
->>>>>>> c0b73178d5711c0ab7cc43c1bbb003bff53ecb09
+      pivot: {x: 0.50634617, y: 0.32}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -144,14 +125,6 @@ TextureImporter:
       name: girl_walk_spritesheet_1
       rect:
         serializedVersion: 2
-<<<<<<< HEAD
-        x: 300
-        y: 10
-        width: 300
-        height: 400
-      alignment: 0
-      pivot: {x: 0, y: 0}
-=======
         x: 193
         y: 326
         width: 5
@@ -171,8 +144,7 @@ TextureImporter:
         width: 143
         height: 351
       alignment: 9
-      pivot: {x: 0.5104643, y: 0.52156883}
->>>>>>> c0b73178d5711c0ab7cc43c1bbb003bff53ecb09
+      pivot: {x: 0.530276, y: 0.32}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
