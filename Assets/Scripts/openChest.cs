@@ -6,6 +6,8 @@ public class openChest : MonoBehaviour {
 
     public Sprite openSprite;
     public bool chestIsOpen;
+
+    //public key_Inventory keyInInv;
 	// Use this for initialization
 	void Start () {
 		
@@ -16,13 +18,14 @@ public class openChest : MonoBehaviour {
 		
 	}
 
-    //left as player for now, change when key added
+    //left as player for now, change when key added && collision.GetComponent<key_Inventory>().keyInv == true
     public void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log(collision);
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") && GetComponent<key_Inventory>().keyInv == true)
         {
             transform.GetComponent<SpriteRenderer>().sprite = openSprite;
+            Debug.Log("reached");
             chestIsOpen = true;
 
         }
