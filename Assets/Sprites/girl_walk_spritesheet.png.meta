@@ -1,11 +1,12 @@
 fileFormatVersion: 2
 guid: f655bb43a3e15584d89145d39285f076
-timeCreated: 1510558057
+timeCreated: 1510453250
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
     21300000: girl_walk_spritesheet_0
     21300002: girl_walk_spritesheet_1
+    21300004: girl_walk_spritesheet_2
   externalObjects: {}
   serializedVersion: 4
   mipmaps:
@@ -38,7 +39,7 @@ TextureImporter:
     mipBias: -1
     wrapU: 1
     wrapV: 1
-    wrapW: -1
+    wrapW: 1
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
@@ -76,6 +77,24 @@ TextureImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
   - buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -92,12 +111,12 @@ TextureImporter:
       name: girl_walk_spritesheet_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 10
-        width: 300
-        height: 400
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        x: 55
+        y: 28
+        width: 143
+        height: 339
+      alignment: 9
+      pivot: {x: 0.50634617, y: 0.32}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -106,12 +125,26 @@ TextureImporter:
       name: girl_walk_spritesheet_1
       rect:
         serializedVersion: 2
-        x: 300
-        y: 10
-        width: 300
-        height: 400
+        x: 193
+        y: 326
+        width: 5
+        height: 7
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: girl_walk_spritesheet_2
+      rect:
+        serializedVersion: 2
+        x: 362
+        y: 24
+        width: 143
+        height: 351
+      alignment: 9
+      pivot: {x: 0.530276, y: 0.32}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []

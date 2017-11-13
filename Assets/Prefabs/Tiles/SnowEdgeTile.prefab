@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 61810323178699334}
   m_Layer: 0
   m_Name: SnowEdgeTile
-  m_TagString: Floor
+  m_TagString: Ledge
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34,8 +34,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1897484872495782}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.5, y: -0.5, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.26420498, y: -0.6622559, z: 0.03459725}
   m_LocalScale: {x: 1.614983, y: 1.614983, z: 1.614983}
   m_Children: []
   m_Father: {fileID: 0}
