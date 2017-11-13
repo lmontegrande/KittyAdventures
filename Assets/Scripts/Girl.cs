@@ -27,7 +27,7 @@ public class Girl : PlayerControlledCharacter
 
     public override void Update()
     {
-        if (isBeingPulled)
+        if (isBeingPulled || isBeingTethered)
         {
             _rigidbody2D.velocity = Vector2.ClampMagnitude(_rigidbody2D.velocity, jumpForce);
             _rigidbody2D.freezeRotation = false;
