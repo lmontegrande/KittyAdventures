@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SoulRope : MonoBehaviour {
 
-    public GameObject cat, girl;
     public float distanceAllowed = 2f;
     public float rubberBandingFloat = 1f;
     public float yCatSwapOffset = 1f;
@@ -17,10 +16,18 @@ public class SoulRope : MonoBehaviour {
     public GameObject teleportEffect;
     public float letGoYOffset = 1f;
 
+    private GameObject cat, girl;
     private LineRenderer _lineRenderer;
 
     public void Start()
     {
+        cat = GameObject.Find("Cat");
+        girl = GameObject.Find("Girl");
+        if (cat == null || girl == null)
+        {
+            Debug.LogError("Cat or Girl not found in scene");
+            return;
+        }
         _lineRenderer = GetComponent<LineRenderer>();
         _lineRenderer.positionCount = numRopePoints;
         cat.GetComponent<Cat>().usePull += PullGirl;
@@ -29,12 +36,16 @@ public class SoulRope : MonoBehaviour {
 
     public void Update()
     {
+        if (cat == null || girl == null)
+            return;
         DrawRope();
         HandleInput();
     }
 
     public void LateUpdate()
     {
+        if (cat == null || girl == null)
+            return;
         PullTogether();
     }
 
@@ -100,13 +111,13 @@ public class SoulRope : MonoBehaviour {
 
         if (deltaVector.magnitude < distanceAllowed)
         {
-            cat.GetComponent<Cat>().isBeingPulled = false;
-            girl.GetComponent<Girl>().isBeingPulled = false;
+            cat.GetComponent<Cat>().isBeingTethered = false;
+            girl.GetComponent<Girl>().isBeingTethered = false;
             return;
         }
 
-        cat.GetComponent<Cat>().isBeingPulled = true;
-        girl.GetComponent<Girl>().isBeingPulled = true;
+        cat.GetComponent<Cat>().isBeingTethered = true;
+        girl.GetComponent<Girl>().isBeingTethered = true;
 
         Vector2 catVelocity = cat.GetComponent<Rigidbody2D>().velocity;
         Vector2 girlVelocity = girl.GetComponent<Rigidbody2D>().velocity;
