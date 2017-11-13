@@ -12,27 +12,25 @@ public class SideCollider : MonoBehaviour {
     public OnSideExitHandle OnSideExit;
     public OnLedgeEnterHandle OnLedgeEnter;
 
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Ledge" && OnLedgeEnter != null)
+        {
+            OnLedgeEnter(collision.gameObject);
+        }
+    }
+
     public void OnTriggerStay2D(Collider2D collision)
     {
-        if ((collision.tag == "Wall" || collision.tag == "Ledge") && OnSideEnter != null)
+        if (collision.tag == "Wall" && OnSideEnter != null)
         {
             OnSideEnter.Invoke();
         }
-
-        // If we implement climb, use this
-        //if (collision.tag == "Wall" && OnSideEnter != null)
-        //{
-        //    OnSideEnter.Invoke();
-        //}
-        //if (collision.tag == "Ledge" && OnLedgeEnter != null)
-        //{
-        //    OnLedgeEnter(collision.gameObject);
-        //}
     }
 
     public void OnTriggerExit2D(Collider2D collision)
     {
-        if ((collision.tag == "Wall" || collision.tag == "Ledge") && OnSideExit != null)
+        if (collision.tag == "Wall" && OnSideExit != null)
         {
             OnSideExit.Invoke();
         }

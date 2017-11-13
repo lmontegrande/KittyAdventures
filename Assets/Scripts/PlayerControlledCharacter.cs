@@ -27,14 +27,13 @@ public abstract class PlayerControlledCharacter : Character
     public bool isBeingHeld = false;
     public bool isBeingThrown = false;
     public bool isLedgeClimbing = false;
-    public bool isHolding = false;
 
     private bool isLeftTouching;
     private bool isRightTouching;
     private bool isFacingRight = true;
     private bool isGrounded;
     private bool isGamePaused = false;
-    private bool isLadderClimbing = false;
+    private bool isLadderClimbing = false;    
 
     public void UpdateController(PlayerController p)
     {
@@ -64,7 +63,7 @@ public abstract class PlayerControlledCharacter : Character
 
         HandlePlayerSwitch();
         
-        if (!(isLedgeClimbing || isBeingHeld || isDead || isGamePaused || playerController == PlayerController.NONE))
+        if (!(isLedgeClimbing || isBeingHeld || isBeingThrown || isDead || isGamePaused || playerController == PlayerController.NONE))
         {
             HandleAxisInput();
             HandleButtonInput();
@@ -134,9 +133,6 @@ public abstract class PlayerControlledCharacter : Character
 
     private void HandleAxisInput()
     {
-        if (isHolding || isBeingThrown || isBeingPulled)
-            return;
-
         Vector2 axisInput = new Vector2(Input.GetAxisRaw(playerController.ToString() + "_Horizontal"), Input.GetAxisRaw(playerController.ToString() + "_Vertical"));
         if ((axisInput.x > 0 && isRightTouching) || (axisInput.x < 0 && isLeftTouching))
         {
@@ -194,7 +190,8 @@ public abstract class PlayerControlledCharacter : Character
             }
         }
 
-        _rigidbody2D.velocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.velocity.y);
+        if (!isBeingPulled)
+            _rigidbody2D.velocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.velocity.y);
         //if (isGrounded)
         //    _rigidbody2D.velocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.velocity.y);
         //else

@@ -241,7 +241,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1.25}
+  m_Size: {x: 0.2, y: 1}
   m_EdgeRadius: 0
 --- !u!61 &61450941850069966
 BoxCollider2D:
@@ -316,7 +316,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1.25}
+  m_Size: {x: 0.2, y: 1}
   m_EdgeRadius: 0
 --- !u!95 &95546704789818812
 Animator:
@@ -385,7 +385,6 @@ MonoBehaviour:
   isBeingHeld: 0
   isBeingThrown: 0
   isLedgeClimbing: 0
-  isHolding: 0
 --- !u!114 &114626310756101882
 MonoBehaviour:
   m_ObjectHideFlags: 1
