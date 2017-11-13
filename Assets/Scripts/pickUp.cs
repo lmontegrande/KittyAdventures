@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class pickUp : MonoBehaviour {
 
@@ -14,6 +15,11 @@ public class pickUp : MonoBehaviour {
     public float followFarRange = 5f;
 
     private GameObject followTarget;
+
+    //For UI
+    //counts how many souls has been picken up.
+    public Text soulAmountText;
+    public int soulCounter = 0;
 
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -31,6 +37,8 @@ public class pickUp : MonoBehaviour {
             GetComponent<AudioSource>().PlayOneShot(collectAudioClip);
             GetComponent<SpriteRenderer>().sprite = null;
             GetComponent<Animator>().SetBool("isCollected", true);
+            soulCounter++;
+            soulCountUpdate();
         }
     }
 
@@ -43,5 +51,10 @@ public class pickUp : MonoBehaviour {
             container.transform.position = Vector3.Lerp(container.transform.position, followTarget.transform.position, x);
             yield return new WaitForSeconds(followDelay);
         }
+    }
+
+    private void soulCountUpdate()
+    {
+        soulAmountText.text = " " + soulCounter.ToString();
     }
 }
