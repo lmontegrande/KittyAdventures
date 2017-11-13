@@ -9,62 +9,66 @@ public abstract class PlayerControlledCharacter : Character
 
     public int health = 5;
     public float moveSpeed = 5f;
+    public float climbingSpeed = 5f;
     public float jumpForce = 5f;
     public float airControl = 2f;
+    public float ledgeClimbTime = 1f;
     public PlayerController playerController = PlayerController.NONE;
     public bool isDead = false;
     public bool isSpritesFlipped = false;
-    public bool tetherIsPulling = false;
 
     protected Rigidbody2D _rigidbody2D;
     protected Animator _animator;
     protected SpriteRenderer _spriteRenderer;
     public FootCollider foot;
     public SideCollider leftSideCollider, rightSideCollider;
+    public bool isTouchingladder = false;
+    public bool isBeingPulled = false;
+    public bool isBeingHeld = false;
+    public bool isBeingThrown = false;
+    public bool isLedgeClimbing = false;
 
     private bool isLeftTouching;
     private bool isRightTouching;
     private bool isFacingRight = true;
     private bool isGrounded;
+    private bool isGamePaused = false;
+    private bool isLadderClimbing = false;    
 
     public void UpdateController(PlayerController p)
     {
         playerController = p;
     }
 
-    public void Start()
+    public virtual void Start()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
         _animator = GetComponent<Animator>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
         foot.OnLandGround += () => { Land(); isGrounded = true; }; // Fix Bug for moving around floor tiles
-        foot.OnLeaveGround += () => { };
+        foot.OnLeaveGround += () => { isGrounded = false; };
         leftSideCollider.OnSideEnter += () => { isLeftTouching = true; }; // Fix issue for tiled walls
         leftSideCollider.OnSideExit += () => { isLeftTouching = false; };
+        leftSideCollider.OnLedgeEnter += HandleLedge;
         rightSideCollider.OnSideEnter += () => { isRightTouching = true; };
         rightSideCollider.OnSideExit += () => { isRightTouching = false; };
+        rightSideCollider.OnLedgeEnter += HandleLedge;
+
+        //base.Start();
     }
 
-    public void Update()
+    public virtual void Update()
     {
-        // Dead
-        if (isDead)
-            return;
 
-        // Handle Updates
+        HandlePlayerSwitch();
+        
+        if (!(isLedgeClimbing || isBeingHeld || isBeingThrown || isDead || isGamePaused || playerController == PlayerController.NONE))
+        {
+            HandleAxisInput();
+            HandleButtonInput();
+        }
 
-        // If no player controlling, return
-        if (playerController == PlayerController.NONE)
-            return;
-
-        if (tetherIsPulling)
-            _animator.speed = .2f;
-        else
-            _animator.speed = 1;
-
-        HandleAxisInput();
-        HandleButtonInput();
     }
 
     public void GetHurt(int damage)
@@ -81,27 +85,22 @@ public abstract class PlayerControlledCharacter : Character
         isDead = true;
         _animator.SetBool("isDead", true);
         _rigidbody2D.velocity = Vector2.zero;
+        GameManager.instance.GameOver();
     }
 
     public override void Pause()
     {
-        throw new System.NotImplementedException();
+        isGamePaused = true;
     }
 
-    private void HandleButtonInput()
+    public override void UnPause()
     {
-        bool jumpButtonPressed = Input.GetButtonDown(playerController.ToString() + "_Jump");
-        bool skillButtonPressed = Input.GetButtonDown(playerController.ToString() + "_Skill");
+        isGamePaused = false;
+    }
+    
+    private void HandlePlayerSwitch()
+    {
         bool pauseButtonPressed = Input.GetButtonDown("Pause");
-        if (jumpButtonPressed && isGrounded)
-        {             
-            Jump();
-        }
-
-        if (skillButtonPressed)
-        {
-            UseSkill();
-        }
         if (pauseButtonPressed)
         {
             switch (playerController)
@@ -118,6 +117,20 @@ public abstract class PlayerControlledCharacter : Character
         }
     }
 
+    private void HandleButtonInput()
+    {
+        bool jumpButtonPressed = Input.GetButtonDown(playerController.ToString() + "_Jump");
+        bool skillButtonPressed = Input.GetButton(playerController.ToString() + "_Skill");
+        bool skillButtonReleased = Input.GetButtonUp(playerController.ToString() + "_Skill");
+
+        if (jumpButtonPressed && isGrounded)    
+            Jump();
+        if (skillButtonPressed)
+            UseSkill();
+        if (skillButtonReleased)
+            ReleaseSkill();
+    }
+
     private void HandleAxisInput()
     {
         Vector2 axisInput = new Vector2(Input.GetAxisRaw(playerController.ToString() + "_Horizontal"), Input.GetAxisRaw(playerController.ToString() + "_Vertical"));
@@ -126,12 +139,30 @@ public abstract class PlayerControlledCharacter : Character
             axisInput = Vector2.zero;
         }
 
-        Move(axisInput);
+        if (isTouchingladder)
+        {
+            if (axisInput.y > 0)
+            {
+                isLadderClimbing = true;
+                _animator.SetBool("isClimbing", true);
+                _rigidbody2D.gravityScale = 0;
+            }
+        }
+        else
+        {
+            isLadderClimbing = false;
+            _animator.SetBool("isClimbing", false);
+            _rigidbody2D.gravityScale = 4;
+        }
+
+        if (isLadderClimbing)
+            HandleLadder(axisInput);
+        else
+            Move(axisInput);
     }
 
     private void Move(Vector2 direction)
-
-    { 
+    {
         _animator.SetFloat("movement", _rigidbody2D.velocity.magnitude);
 
         if (direction.x > 0)
@@ -159,21 +190,55 @@ public abstract class PlayerControlledCharacter : Character
             }
         }
 
-        if (Mathf.Abs(direction.x) >= 0) _rigidbody2D.velocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.velocity.y);
-        //if (Mathf.Abs(direction.x) >= 0 && !(tetherIsPulling && !isGrounded)) _rigidbody2D.velocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.velocity.y);
-
+        if (!isBeingPulled)
+            _rigidbody2D.velocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.velocity.y);
         //if (isGrounded)
-        //    if (Mathf.Abs(direction.x) >= 0.1)
-        //        _rigidbody2D.velocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.velocity.y);
+        //    _rigidbody2D.velocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.velocity.y);
         //else
-        //    _rigidbody2D.velocity += new Vector2(direction.x * moveSpeed, 0) * Time.deltaTime * airControl;
+        //{
+        //    _rigidbody2D.velocity += new Vector2(direction.x * moveSpeed, 0);
+        //    _rigidbody2D.velocity = new Vector2(Mathf.Clamp(_rigidbody2D.velocity.x, -moveSpeed, moveSpeed), _rigidbody2D.velocity.y);
+        //}
+    }
 
+    private void HandleLadder(Vector2 direction)
+    {
+        _rigidbody2D.velocity = new Vector2(direction.x, direction.y) * climbingSpeed;
+    }
 
+    private void HandleLedge(GameObject ledgeTile)
+    {
+        Vector2 axisInput = new Vector2(Input.GetAxisRaw(playerController.ToString() + "_Horizontal"), Input.GetAxisRaw(playerController.ToString() + "_Vertical"));
+        if (isGrounded) return;
+        if (ledgeTile.transform.position.x > transform.position.x && axisInput.x > 0)
+            StartCoroutine(LedgeClimb(ledgeTile));
+        if (ledgeTile.transform.position.x < transform.position.x && axisInput.x < 0)
+            StartCoroutine(LedgeClimb(ledgeTile));
+    }
+
+    private IEnumerator LedgeClimb(GameObject target)
+    {
+        if (!isLedgeClimbing)
+        {
+            isLedgeClimbing = true;
+            float timer = 0;
+            Vector3 startingPosition = transform.position;
+            _animator.SetBool("isClimbing", true);
+            while (timer < ledgeClimbTime)
+            {
+                timer += Time.deltaTime;
+                ////transform.Rotate(new Vector3(0, 0, 360 * (timer / ledgeClimbTime)));
+                transform.position = Vector3.Lerp(target.transform.position, target.transform.position + Vector3.up, 0);
+                yield return null;
+            }
+            _animator.SetBool("isClimbing", false);
+            transform.position = target.transform.position + Vector3.up;
+            isLedgeClimbing = false;
+        }
     }
 
     private void Jump()
     {
-        isGrounded = false;
         _rigidbody2D.velocity = new Vector2(_rigidbody2D.velocity.x, jumpForce);
         _animator.SetBool("isJumping", true);
     }
@@ -181,7 +246,13 @@ public abstract class PlayerControlledCharacter : Character
     private void Land()
     {
         _animator.SetBool("isJumping", false);
+        isLadderClimbing = false;
+        isBeingThrown = false;
     }
 
+    public abstract void LadderEnter(bool isEnter);
+
     protected abstract void UseSkill();
+
+    protected abstract void ReleaseSkill();
 }

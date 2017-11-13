@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class pickUp : MonoBehaviour {
 
@@ -15,6 +16,11 @@ public class pickUp : MonoBehaviour {
 
     private GameObject followTarget;
 
+    //For UI
+    //counts how many souls has been picken up.
+    public Text soulAmountText;
+    public int soulCounter = 0;
+
     public void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Player")
@@ -24,13 +30,15 @@ public class pickUp : MonoBehaviour {
             Destroy(GetComponent<CircleCollider2D>());
 
             //followTarget = other.gameObject;
-            followTarget = GameObject.Find("Cat");
-            StartCoroutine(LerpFollow());
+            //followTarget = GameObject.Find("Cat");
+            //StartCoroutine(LerpFollow());
 
             GetComponent<ParticleSystem>().Play();
             GetComponent<AudioSource>().PlayOneShot(collectAudioClip);
             GetComponent<SpriteRenderer>().sprite = null;
             GetComponent<Animator>().SetBool("isCollected", true);
+            soulCounter++;
+            soulCountUpdate();
         }
     }
 
@@ -43,5 +51,10 @@ public class pickUp : MonoBehaviour {
             container.transform.position = Vector3.Lerp(container.transform.position, followTarget.transform.position, x);
             yield return new WaitForSeconds(followDelay);
         }
+    }
+
+    private void soulCountUpdate()
+    {
+        soulAmountText.text = " " + soulCounter.ToString();
     }
 }

@@ -20,6 +20,11 @@ public class DogMovement : Character
 
   }
 
+  public override void UnPause()
+  {
+
+  }
+
   void Start ()
   {
     dogState = "patrol";
@@ -36,25 +41,24 @@ public class DogMovement : Character
 
     if (hit.collider != null && hit.collider.name == "Quad")
     {
-      GetComponent<Rigidbody2D>().AddForce(Vector3.up * force * 30 + (hit.collider.transform.position-transform.position) * force);
-      // Debug.Log(dogState);
-      // if (dogState == "patrol")
-      // {
-      //   anim.SetBool("Running", false);
-      //   GetComponent<Rigidbody2D>().AddForce(Vector3.up * force * 30 + (hit.collider.transform.position-transform.position) * force);
-      //   dogState = "bark";
-      // }
-      // else if (dogState == "bark")
-      // {
-      //   if (true) // wait for 3s
-      //   {
-      //     dogState = "bark";
-      //   }
-      // }
-      // else if (dogState == "kill")
-      // {
-      //   dogState = "patrol";
-      // }
+      Debug.Log(dogState);
+      if (dogState == "patrol")
+      {
+        anim.SetBool("Running", false);
+        GetComponent<Rigidbody2D>().AddForce(Vector3.up * force * 30 + (hit.collider.transform.position-transform.position) * force);
+        dogState = "bark";
+      }
+      else if (dogState == "bark")
+      {
+        if (true) // wait for 3s
+        {
+          dogState = "bark";
+        }
+      }
+      else if (dogState == "kill")
+      {
+        dogState = "patrol";
+      }
     }
   }
 
@@ -87,7 +91,6 @@ public class DogMovement : Character
       }
 
       yield return null;
-
     }
   }
 

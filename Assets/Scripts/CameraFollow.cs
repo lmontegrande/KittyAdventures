@@ -20,7 +20,7 @@ public class CameraFollow : MonoBehaviour {
         startingOrthoSize = _camera.orthographicSize;
     }
 
-	public void Update()
+	public void LateUpdate()
     {
         players = GameObject.FindGameObjectsWithTag("Player");
 

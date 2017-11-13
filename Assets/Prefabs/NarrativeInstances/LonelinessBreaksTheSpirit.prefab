@@ -185,7 +185,8 @@ MonoBehaviour:
   isPlayInOrder: 1
   backgroundFadeInTime: 1
   characterFadeInTime: 1
-  TextFadeInTime: 1
+  textFadeInTime: 1
+  fadeOutTime: 1
   narrativeCanvas: {fileID: 1974927481847872}
   backGroundImage: {fileID: 114815990763211140}
   characterImage: {fileID: 114167616921113330}

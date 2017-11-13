@@ -9,10 +9,13 @@ public class SoulRope : MonoBehaviour {
     public float rubberBandingFloat = 1f;
     public float yCatSwapOffset = 1f;
     public float yGirlSwapOffset = 1f;
+    [Range(0, 1)]
+    public float percentHideRope;
     public Color ropeColor = Color.black;
     public int numRopePoints = 10;
     public float teleportEffectLinger = 1.5f;
     public GameObject teleportEffect;
+    public float letGoYOffset = 1f;
 
     private LineRenderer _lineRenderer;
 
@@ -20,6 +23,8 @@ public class SoulRope : MonoBehaviour {
     {
         _lineRenderer = GetComponent<LineRenderer>();
         _lineRenderer.positionCount = numRopePoints;
+        cat.GetComponent<Cat>().usePull += PullGirl;
+        cat.GetComponent<Cat>().releasePull += LetGo;
     }
 
     public void Update()
@@ -30,7 +35,7 @@ public class SoulRope : MonoBehaviour {
 
     public void LateUpdate()
     {
-        HandlePhysics(); 
+        PullTogether();
     }
 
     private void DrawRope()
@@ -46,44 +51,79 @@ public class SoulRope : MonoBehaviour {
 
             _lineRenderer.SetPosition(x, newPosition);
         }
-
-        Color lineColor = Color.Lerp(Color.clear, ropeColor, deltaVector.magnitude / distanceAllowed);
-        //_lineRenderer.SetPosition(0, girl.transform.position);
-        //_lineRenderer.SetPosition(1, cat.transform.position);
-        _lineRenderer.startColor = lineColor;
-        _lineRenderer.endColor = lineColor;
-    }
-
-    private void HandlePhysics()
-    {
-        Vector2 deltaVector = cat.transform.position - girl.transform.position;
-        float scalar = 2f; 
-
-        if (deltaVector.magnitude < distanceAllowed)
+        
+        if (deltaVector.magnitude >= distanceAllowed*percentHideRope)
         {
-            cat.GetComponent<Cat>().tetherIsPulling = false;
-            girl.GetComponent<Girl>().tetherIsPulling = false;
-            return;
+            Color lineColor = Color.Lerp(Color.clear, ropeColor, (deltaVector.magnitude - (distanceAllowed * percentHideRope)) / (distanceAllowed));
+            _lineRenderer.startColor = lineColor;
+            _lineRenderer.endColor = lineColor;
+        } else
+        {
+            _lineRenderer.startColor = Color.clear;
+            _lineRenderer.endColor = Color.clear;
         }
 
-        cat.GetComponent<Cat>().tetherIsPulling = true;
-        girl.GetComponent<Girl>().tetherIsPulling = true;
+        //_lineRenderer.SetPosition(0, girl.transform.position);
+        //_lineRenderer.SetPosition(1, cat.transform.position);
+    }
+
+    private void PullGirl()
+    {
+        Vector2 deltaVector = cat.transform.position - girl.transform.position;
 
         Vector2 catVelocity = cat.GetComponent<Rigidbody2D>().velocity;
         Vector2 girlVelocity = girl.GetComponent<Rigidbody2D>().velocity;
 
         Vector2 catToGirlVector = girl.transform.position - cat.transform.position;
         Vector2 girlToCatVector = cat.transform.position - girl.transform.position;
+
         Vector2 applyCatVelocity = Vector2.zero;
         Vector2 applyGirlVelocity = Vector2.zero;
         applyCatVelocity = (Vector2)(catToGirlVector) * rubberBandingFloat;
         applyGirlVelocity = (Vector2)(girlToCatVector) * rubberBandingFloat;
-        
+
+
+        //girl.GetComponent<Rigidbody2D>().velocity += (Vector2)Vector3.Lerp(applyGirlVelocity, Vector3.zero, distanceAllowed / deltaVector.magnitude);
+        girl.GetComponent<Rigidbody2D>().velocity += applyGirlVelocity;
+        girl.GetComponent<PlayerControlledCharacter>().isBeingPulled = true;
+    }
+
+    private void LetGo()
+    {
+        girl.GetComponent<PlayerControlledCharacter>().isBeingPulled = false;
+        girl.transform.position += Vector3.up * letGoYOffset;
+    }
+    
+    private void PullTogether()
+    {
+        Vector2 deltaVector = cat.transform.position - girl.transform.position;
+
+        if (deltaVector.magnitude < distanceAllowed)
+        {
+            cat.GetComponent<Cat>().isBeingPulled = false;
+            girl.GetComponent<Girl>().isBeingPulled = false;
+            return;
+        }
+
+        cat.GetComponent<Cat>().isBeingPulled = true;
+        girl.GetComponent<Girl>().isBeingPulled = true;
+
+        Vector2 catVelocity = cat.GetComponent<Rigidbody2D>().velocity;
+        Vector2 girlVelocity = girl.GetComponent<Rigidbody2D>().velocity;
+
+        Vector2 catToGirlVector = girl.transform.position - cat.transform.position;
+        Vector2 girlToCatVector = cat.transform.position - girl.transform.position;
+
+        Vector2 applyCatVelocity = Vector2.zero;
+        Vector2 applyGirlVelocity = Vector2.zero;
+        applyCatVelocity = (Vector2)(catToGirlVector) * rubberBandingFloat;
+        applyGirlVelocity = (Vector2)(girlToCatVector) * rubberBandingFloat;
+
 
         cat.GetComponent<Rigidbody2D>().velocity += (Vector2)Vector3.Lerp(applyCatVelocity, Vector3.zero, distanceAllowed / deltaVector.magnitude);
         girl.GetComponent<Rigidbody2D>().velocity += (Vector2)Vector3.Lerp(applyGirlVelocity, Vector3.zero, distanceAllowed / deltaVector.magnitude);
     }
-    
+
     private void HandleInput()
     {
         if (Input.GetButtonDown("Swap"))
