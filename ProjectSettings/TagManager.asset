@@ -4,7 +4,13 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - OldDog
+  - Floor
+  - Wall
+  - Door
+  - Switch
+  - Chest
+  - Ledge
+  - Key
   layers:
   - Default
   - TransparentFX
@@ -14,9 +20,9 @@ TagManager:
   - UI
   - 
   - 
-  - Enemy
-  - Player
-  - 
+  - Players
+  - Boundaries
+  - Background
   - 
   - 
   - 
