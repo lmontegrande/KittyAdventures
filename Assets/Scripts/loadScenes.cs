@@ -17,14 +17,17 @@ public class loadScenes : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        //gets the amount of souls from the pick up counter
         currentAmount = soulShards.GetComponent<pickUp>().soulCounter;
 
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
+        //checks if the door is being collided with the player and the amount of souls is correct
         if (collision.gameObject.CompareTag("Player") && neededSouls == currentAmount)
         {
+            //loads next level
             loadLevel(nextLevel);
             Debug.Log(nextLevel);
             Debug.Log("I can reach!");
