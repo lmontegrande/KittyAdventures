@@ -8,6 +8,7 @@ public class DogMovement : Character
   public float currentSpeed = 0.01f;
   public float patrolTimeWait = 2f;
   public float alarmTimeWait = 3f;
+  public float checkTimeWait = 3f;
   public float sight = 1.2f;
   public float force;
   int currentPoint;
@@ -16,6 +17,7 @@ public class DogMovement : Character
   string dogState = "patrol";  // bark, kill
   bool hasSeen;
   Animator anim;
+  AudioSource audio;
 
   public override void Pause()
   {
@@ -33,75 +35,93 @@ public class DogMovement : Character
     anim = GetComponent<Animator> ();
     StartCoroutine ("Patrol");
     anim.SetBool("Running", true);
+    audio = GetComponent<AudioSource>();
   }
 
   void Update ()
   {
-    RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.localScale.x * Vector2.right, sight, 1 << LayerMask.NameToLayer("Player"));
+    RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.localScale.x * Vector2.right, sight, 1 << LayerMask.NameToLayer("Players"));
 
+    // Debug.Log(dogState);
+
+    if (dogState == "patrol")
+    {
+      checkTimeWait = 3;
+    }
+
+    // if dog has seen the player
     if (hit.collider != null && hit.collider.name == "Quad")
     {
-      hasSeen = true;
-
       if (dogState == "patrol")
       {
         alarmTimeWait = 3f;
-        anim.SetBool("Running", true);
+        anim.SetBool("Running", false);
         dogState = "bark";
       }
       else if (dogState == "bark")
       {
-        if (alarmTimeWait > 0f) // wait for 3s
+        StopCoroutine("Patrol");
+        if (alarmTimeWait == 3f)
+        {
+          audio.Play();
+          alarmTimeWait -= Time.deltaTime;
+        }
+        if (alarmTimeWait < 3 && alarmTimeWait > 0)
         {
           alarmTimeWait -= Time.deltaTime;
-          dogState = "bark";
-          // GetComponent<Rigidbody2D>().AddForce(Vector3.up * force * 30 + (hit.collider.transform.position-transform.position) * force);
-          StopCoroutine ("Patrol");
-          StartCoroutine("Bark");
         }
         else
         {
+          alarmTimeWait = 3f;
           dogState = "kill";
         }
       }
-      else if (dogState == "kill")
+      else // suppose to be check
       {
-        Debug.Log("Kill the cat!");
         alarmTimeWait = 3f;
-        dogState = "patrol";
-        anim.SetBool("Running", true);
-        StopCoroutine ("Bark");
-        StopCoroutine ("Patrol");
-        StartCoroutine("Kill", hit);
+        dogState = "bark";
       }
     }
 
-    // out of the dog's sight
-    if (hit.collider == null && hasSeen && dogState != "check")
+    // player out of the dog's sight
+    if (hit.collider == null && dogState == "bark")
     {
       dogState = "check";
+    }
+
+    if (dogState == "check")
+    {
+      if (checkTimeWait == 2)
+      {
+        transform.localScale = new Vector3(-transform.localScale.x, 1, 1);
+      }
+      if (checkTimeWait == 1)
+      {
+        transform.localScale = -transform.localScale;
+      }
+
+      if (checkTimeWait <= 0)
+      {
+        checkTimeWait = 3;
+        dogState = "patrol";
+        anim.SetBool("Running", true);
+        StartCoroutine("Patrol");
+      }
+
+      if (hit.collider != null && hit.collider.name == "Quad")
+      {
+        checkTimeWait = 3f;
+        dogState = "bark";
+      }
+      checkTimeWait -= Time.deltaTime;
+    }
+
+    if (dogState == "kill")
+    {
+      Kill(hit);
       anim.SetBool("Running", true);
-      StopCoroutine ("Bark");
-      StartCoroutine ("Check");
-    }
-
-    if (dogState == "check" && hit.collider == null)
-    {
-      anim.SetBool("Running", false);
-      alarmTimeWait = 3f;
-      StopCoroutine ("Bark");
-      StopCoroutine("Kill");
-      StartCoroutine("Check");
-      StopCoroutine("Patrol");
-    }
-
-    if (hit.collider == null && dogState == "patrol")
-    {
-      StopCoroutine ("Bark");
-      StopCoroutine("Kill");
-      StopCoroutine("Check");
+      dogState = "patrol";
       StartCoroutine("Patrol");
-      anim.SetBool("Running", true);
     }
   }
 
@@ -136,33 +156,16 @@ public class DogMovement : Character
     }
   }
 
-  IEnumerator Bark ()
+  void Kill (RaycastHit2D col)
   {
-    anim.SetBool("Running", false);
-    yield return new WaitForSeconds(patrolTimeWait);
-    yield return null;
-  }
-
-  IEnumerator Check ()
-  {
-    yield return new WaitForSeconds(1);
-    transform.localScale = -transform.localScale;
-    yield return new WaitForSeconds(1);
-    transform.localScale = -transform.localScale;
-    yield return new WaitForSeconds(1);
-    dogState = "patrol";
-  }
-
-  IEnumerator Kill (RaycastHit2D col)
-  {
+    if (col.collider == null)
+      return;
     // moving distance calculation problem
     transform.position = Vector2.MoveTowards(transform.position, new Vector2(col.point.x, transform.position.y), 15 * Time.deltaTime);
-    yield return new WaitForSeconds(1);
-    OnCollisionEnter2D(col);
-    yield return null;
+    DestroyPlayer(col);
   }
 
-  void OnCollisionEnter2D(RaycastHit2D col)
+  void DestroyPlayer(RaycastHit2D col)
   {
     if (col.collider.gameObject.tag == "Player")
     {
@@ -173,7 +176,6 @@ public class DogMovement : Character
   void OnDrawGizmos()
   {
     Gizmos.color = Color.red;
-
     Gizmos.DrawLine(transform.position, transform.position + transform.localScale.x * Vector3.right * -sight);
   }
 }
