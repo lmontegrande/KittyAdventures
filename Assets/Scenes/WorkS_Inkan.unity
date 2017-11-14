@@ -299,11 +299,6 @@ Transform:
   m_PrefabParentObject: {fileID: 4101727336369178, guid: 53fcc002f91201b428fbf11ca807d2cc,
     type: 2}
   m_PrefabInternal: {fileID: 1609730332}
---- !u!1 &320101089 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1314518466110798, guid: e1282e4a60b5b4f4794d0b02e0be6c55,
-    type: 2}
-  m_PrefabInternal: {fileID: 1944489788}
 --- !u!1001 &353644699
 Prefab:
   m_ObjectHideFlags: 0
@@ -640,9 +635,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5eca2834e7cc1524d84bccbd1636e0cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neededSouls: 1
-  nextLevel: TestScene
-  soulShards: {fileID: 320101089}
+  neededSouls: 0
+  nextLevel: 
+  soulShards: {fileID: 0}
 --- !u!212 &700152493
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1874,6 +1869,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e1282e4a60b5b4f4794d0b02e0be6c55, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1944756340 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1750159464179558, guid: ef01bafbc8e691d43959b18c4d7c9128,
+    type: 2}
+  m_PrefabInternal: {fileID: 2113094810}
 --- !u!1001 &2013669506
 Prefab:
   m_ObjectHideFlags: 0
@@ -2036,6 +2036,11 @@ Prefab:
       propertyPath: treasure
       value: 
       objectReference: {fileID: 1859839091}
+    - target: {fileID: 114464135697906450, guid: ef01bafbc8e691d43959b18c4d7c9128,
+        type: 2}
+      propertyPath: keyAsset
+      value: 
+      objectReference: {fileID: 1944756340}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ef01bafbc8e691d43959b18c4d7c9128, type: 2}
   m_IsPrefabParent: 0

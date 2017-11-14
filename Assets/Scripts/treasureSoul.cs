@@ -18,7 +18,8 @@ public class treasureSoul : MonoBehaviour {
         if (GetComponent<openChest>().chestIsOpen == true)
         {
             treasure.SetActive(true);
-
+            treasure.GetComponent<pickUp>().soulCounter++;
+            treasure.GetComponent<pickUp>().soulCountUpdate();
         }
 	}
 }
