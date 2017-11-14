@@ -5,7 +5,6 @@ using UnityEngine;
 public class doorSwitch : MonoBehaviour {
 
     public Sprite downSwitch;
-
     public Sprite open_Door;
 
 	// Use this for initialization

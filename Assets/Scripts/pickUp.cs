@@ -41,7 +41,7 @@ public class pickUp : MonoBehaviour {
             soulCountUpdate();
         }
     }
-
+ 
     private IEnumerator LerpFollow()
     {
         while (true)
@@ -53,7 +53,7 @@ public class pickUp : MonoBehaviour {
         }
     }
 
-    private void soulCountUpdate()
+    public void soulCountUpdate()
     {
         soulAmountText.text = " " + soulCounter.ToString();
     }
