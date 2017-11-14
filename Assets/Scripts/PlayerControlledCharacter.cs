@@ -24,6 +24,7 @@ public abstract class PlayerControlledCharacter : Character
     public SideCollider leftSideCollider, rightSideCollider;
     public bool isTouchingladder = false;
     public bool isBeingPulled = false;
+    public bool isBeingTethered = false;
     public bool isBeingHeld = false;
     public bool isBeingThrown = false;
     public bool isLedgeClimbing = false;
@@ -134,7 +135,7 @@ public abstract class PlayerControlledCharacter : Character
 
     private void HandleAxisInput()
     {
-        if (isHolding || isBeingThrown || isBeingPulled)
+        if (isHolding || isBeingThrown || isBeingPulled || isBeingTethered)
             return;
 
         Vector2 axisInput = new Vector2(Input.GetAxisRaw(playerController.ToString() + "_Horizontal"), Input.GetAxisRaw(playerController.ToString() + "_Vertical"));
