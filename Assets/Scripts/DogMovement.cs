@@ -8,7 +8,7 @@ public class DogMovement : Character
   public float currentSpeed = 0.01f;
   public float patrolTimeWait = 2f;
   public float alarmTimeWait = 3f;
-  public float checkTimeWait = 3f;
+  public float checkTimeWait = 5f;
   public float sight = 1.2f;
   public float force;
   int currentPoint;
@@ -43,10 +43,11 @@ public class DogMovement : Character
     RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.localScale.x * Vector2.right, sight, 1 << LayerMask.NameToLayer("Players"));
 
     // Debug.Log(dogState);
+    // Debug.Log(checkTimeWait);
 
     if (dogState == "patrol")
     {
-      checkTimeWait = 3;
+      checkTimeWait = 5f;
     }
 
     // if dog has seen the player
@@ -91,26 +92,27 @@ public class DogMovement : Character
 
     if (dogState == "check")
     {
-      if (checkTimeWait == 2)
+      if (checkTimeWait <= 4f && checkTimeWait > 2f)
       {
-        transform.localScale = new Vector3(-transform.localScale.x, 1, 1);
+        transform.localScale = new Vector3(-1, 1, 1);
       }
-      if (checkTimeWait == 1)
+      if (checkTimeWait <= 2f && checkTimeWait > 0f)
       {
-        transform.localScale = -transform.localScale;
+        transform.localScale = new Vector3(1, 1, 1);
       }
 
-      if (checkTimeWait <= 0)
+      if (checkTimeWait <= 0f)
       {
-        checkTimeWait = 3;
+        checkTimeWait = 5f;
         dogState = "patrol";
         anim.SetBool("Running", true);
         StartCoroutine("Patrol");
       }
 
+      // player gets into sight when check
       if (hit.collider != null && hit.collider.name == "Quad")
       {
-        checkTimeWait = 3f;
+        checkTimeWait = 5f;
         dogState = "bark";
       }
       checkTimeWait -= Time.deltaTime;
