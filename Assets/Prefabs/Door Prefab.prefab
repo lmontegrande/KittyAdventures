@@ -37,6 +37,7 @@ GameObject:
   - component: {fileID: 212253949226579888}
   - component: {fileID: 61780712107995760}
   - component: {fileID: 114223238110694260}
+  - component: {fileID: 95568028439951126}
   m_Layer: 0
   m_Name: Up_Switch
   m_TagString: Switch
@@ -152,6 +153,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.56, y: 2.56}
   m_EdgeRadius: 0
+--- !u!95 &95568028439951126
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1756124382353342}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d51a3bcc8e3da6d48ad59cb51aec4072, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114223238110694260
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -350,8 +350,7 @@ MonoBehaviour:
   container: {fileID: 1215063702105274}
   followDelay: 0.1
   followFarRange: 20
-  soulAmountText: {fileID: 0}
-  soulCounter: 0
+  ifCollected: 0
 --- !u!114 &114434871079726014
 MonoBehaviour:
   m_ObjectHideFlags: 1
