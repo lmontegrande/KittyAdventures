@@ -8,3 +8,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/Intro.unity
     guid: 799fbd4c8402ee24ba82fb73a6fd9e55
+  - enabled: 1
+    path: Assets/Scenes/WorkS_Inkan.unity
+    guid: 205662961dd6ed24d961fce085d2efd8
