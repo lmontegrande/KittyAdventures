@@ -27,7 +27,7 @@ public class Girl : PlayerControlledCharacter
 
     public override void Update()
     {
-        if (isBeingPulled || isBeingTethered)
+        if ((isBeingPulled && !isHolding) || isBeingTethered)
         {
             _rigidbody2D.velocity = Vector2.ClampMagnitude(_rigidbody2D.velocity, jumpForce);
             _rigidbody2D.freezeRotation = false;
@@ -43,7 +43,8 @@ public class Girl : PlayerControlledCharacter
 
     public override void LadderEnter(bool isEnter)
     {
-        isTouchingladder = isEnter;
+        if(!isHolding)
+            isTouchingladder = isEnter;
     }
 
     protected override void ReleaseSkill()
@@ -54,7 +55,8 @@ public class Girl : PlayerControlledCharacter
             throwAimArrow.SetActive(false);
             cat.transform.rotation = Quaternion.identity;
             cat.transform.position = transform.position + (Vector3) (axisInput.normalized * throwOffset);
-            cat.GetComponent<Rigidbody2D>().velocity = (axisInput.normalized * throwStrength) + _rigidbody2D.velocity;
+            //cat.GetComponent<Rigidbody2D>().velocity = (axisInput.normalized * throwStrength) + _rigidbody2D.velocity;
+            cat.GetComponent<Rigidbody2D>().velocity = (axisInput.normalized * throwStrength);
             cat.isBeingHeld = false;
             cat.isBeingThrown = true;
             isHolding = false;
@@ -64,6 +66,7 @@ public class Girl : PlayerControlledCharacter
     protected override void UseSkill()
     {
         Vector2 axisInput = new Vector2(Input.GetAxisRaw(playerController.ToString() + "_Horizontal"), Input.GetAxisRaw(playerController.ToString() + "_Vertical"));
+        axisInput = axisInput.magnitude == 0 ? Vector2.up : axisInput;
         if (cat != null && (cat.transform.position - transform.position).magnitude < grabDistance)
         {
             if (axisInput.magnitude > 0)

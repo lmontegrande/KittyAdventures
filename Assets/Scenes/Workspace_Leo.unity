@@ -3762,6 +3762,8 @@ MonoBehaviour:
   container: {fileID: 1811124228}
   followDelay: 0.1
   followFarRange: 20
+  soulAmountText: {fileID: 0}
+  soulCounter: 0
 --- !u!212 &37460818
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7998,6 +8000,8 @@ MonoBehaviour:
   container: {fileID: 1119218742}
   followDelay: 0.1
   followFarRange: 20
+  soulAmountText: {fileID: 0}
+  soulCounter: 0
 --- !u!212 &157790376
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8810,7 +8814,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1976473756453980, guid: b317798438ad94949a6ec634bbec963c, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b317798438ad94949a6ec634bbec963c, type: 2}
@@ -13670,7 +13674,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.64, y: 1.28}
+  m_Size: {x: 0.3, y: 1.28}
   m_EdgeRadius: 0
 --- !u!114 &1351728737
 MonoBehaviour:
@@ -17437,6 +17441,8 @@ MonoBehaviour:
   container: {fileID: 1278522019}
   followDelay: 0.1
   followFarRange: 20
+  soulAmountText: {fileID: 0}
+  soulCounter: 0
 --- !u!212 &1401055651
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -21852,6 +21858,8 @@ MonoBehaviour:
   container: {fileID: 840715492}
   followDelay: 0.1
   followFarRange: 20
+  soulAmountText: {fileID: 0}
+  soulCounter: 0
 --- !u!212 &1596313458
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -24142,7 +24150,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.64, y: 1.28}
+  m_Size: {x: 0.3, y: 1.28}
   m_EdgeRadius: 0
 --- !u!114 &2095872178
 MonoBehaviour:
