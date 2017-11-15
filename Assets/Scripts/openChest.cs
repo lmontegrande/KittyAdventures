@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class openChest : MonoBehaviour {
 
     public Sprite openSprite;
     public bool chestIsOpen;
+    public GameObject keyAsset;
+    public Image gotKey;
 
-    //public key_Inventory keyInInv;
 	// Use this for initialization
 	void Start () {
 		
@@ -22,10 +23,15 @@ public class openChest : MonoBehaviour {
     public void OnTriggerEnter2D(Collider2D collision)
     {
         //Debug.Log(collision);
-        if (collision.gameObject.CompareTag("Player") && GetComponent<key_Inventory>().keyInv == true)
+        if (collision.gameObject.CompareTag("Player") && keyAsset.GetComponent<key_Inventory>().keyInv == true)
         {
+            //turn off image
+            gotKey.enabled = false;
+            //get rid of key in the inventory
+            keyAsset.GetComponent<key_Inventory>().keyInv = false;
+            //sets the chest to open
             transform.GetComponent<SpriteRenderer>().sprite = openSprite;
-            Debug.Log("reached");
+            //say that the chest is now open
             chestIsOpen = true;
 
         }
