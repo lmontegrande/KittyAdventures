@@ -17,9 +17,13 @@ public class pickUp : MonoBehaviour {
     private GameObject followTarget;
 
     //For UI
-    //counts how many souls has been picken up.
-    public Text soulAmountText;
-    public int soulCounter = 0;
+    //Checks if anything has been picked up
+    public bool ifCollected = false;
+    // Use this for initialization
+    void Start()
+    {
+ 
+    }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -29,6 +33,7 @@ public class pickUp : MonoBehaviour {
                 OnCollect.Invoke();
             Destroy(GetComponent<CircleCollider2D>());
 
+            ifCollected = true;
             //followTarget = other.gameObject;
             //followTarget = GameObject.Find("Cat");
             //StartCoroutine(LerpFollow());
@@ -37,8 +42,7 @@ public class pickUp : MonoBehaviour {
             GetComponent<AudioSource>().PlayOneShot(collectAudioClip);
             GetComponent<SpriteRenderer>().sprite = null;
             GetComponent<Animator>().SetBool("isCollected", true);
-            soulCounter++;
-            soulCountUpdate();
+            
         }
     }
  
@@ -53,8 +57,5 @@ public class pickUp : MonoBehaviour {
         }
     }
 
-    public void soulCountUpdate()
-    {
-        soulAmountText.text = " " + soulCounter.ToString();
-    }
+
 }
