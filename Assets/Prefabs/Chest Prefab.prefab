@@ -28,7 +28,7 @@ GameObject:
   - component: {fileID: 198509711370184386}
   m_Layer: 0
   m_Name: soul_Shard
-  m_TagString: Untagged
+  m_TagString: Shard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
