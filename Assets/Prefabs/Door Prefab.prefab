@@ -181,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66459ce409b08a44e96922f4632e2ffa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  door: {fileID: 1780474581263554}
   downSwitch: {fileID: 21300000, guid: 74c830bcebb73ea4fac6a99ca779d6a8, type: 3}
   open_Door: {fileID: 21300000, guid: 770c5c865754ff64db07517ec8fef780, type: 3}
 --- !u!212 &212253949226579888

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class doorSwitch : MonoBehaviour {
 
-    public Sprite downSwitch;
+    public GameObject door;
+    public Sprite downSwitch; 
     public Sprite open_Door;
 
 	// Use this for initialization
@@ -25,8 +26,8 @@ public class doorSwitch : MonoBehaviour {
             //collision.GetComponent<BoxCollider2D>().enabled = false;
             //this.gameObject.SetActive(true);
             transform.GetComponent<SpriteRenderer>().sprite = downSwitch;
-            GameObject.FindGameObjectWithTag("Door").GetComponent<BoxCollider2D>().enabled = false;
-            GameObject.FindGameObjectWithTag("Door").GetComponent<SpriteRenderer>().sprite = open_Door;
+            door.GetComponent<BoxCollider2D>().enabled = false;
+            door.GetComponent<SpriteRenderer>().sprite = open_Door;
         }
     }
 }
