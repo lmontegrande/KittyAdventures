@@ -67,7 +67,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1523804123637052}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.96, y: 3.77, z: 0}
+  m_LocalPosition: {x: 0.13, y: 1.5, z: 0}
   m_LocalScale: {x: 0.6854562, y: 0.65039945, z: 1}
   m_Children: []
   m_Father: {fileID: 4894717813131234}
@@ -80,7 +80,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1182705075911664}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.839, y: 2.101, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.4980092, y: 2.4858305, z: 1}
   m_Children: []
   m_Father: {fileID: 4894717813131234}
@@ -93,7 +93,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1591193987532346}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.064363, y: -1.2670364, z: 0}
+  m_LocalPosition: {x: 0.14, y: -2.2867868, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4810252687022710}
@@ -139,9 +139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   neededSouls: 3
   nextLevel: Intro
-  soulShardOne: {fileID: 0}
-  soulShardTwo: {fileID: 0}
-  soulShardThree: {fileID: 0}
+  soulShards: []
   soulAmountText: {fileID: 0}
 --- !u!212 &212098353977516466
 SpriteRenderer:
@@ -174,9 +172,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1662146337
+  m_SortingLayer: 2
+  m_SortingOrder: -1
   m_Sprite: {fileID: 21300000, guid: ec634bdd74374c34ead04fa529bdf3af, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -218,9 +216,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingLayerID: -1662146337
+  m_SortingLayer: 2
+  m_SortingOrder: -2
   m_Sprite: {fileID: 21300000, guid: 8cbea12d85f845d40ab70a1718d37792, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

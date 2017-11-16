@@ -9,14 +9,19 @@ public class loadScenes : MonoBehaviour {
     public int neededSouls;
     public string nextLevel;
     private int currentAmount;
-    public GameObject soulShardOne;
-    public GameObject soulShardTwo;
-    public GameObject soulShardThree;
+    //public GameObject soulShardOne;
+    //public GameObject soulShardTwo;
+    //public GameObject soulShardThree;
+    public GameObject[] soulShards;
     private int playerAmount = 0;
-    public Text soulAmountText;
+    private Text soulAmountText;
     // Use this for initialization
     void Start() {
-       
+        soulShards = GameObject.FindGameObjectsWithTag("Shard");
+        neededSouls = soulShards.Length;
+        soulAmountText = GameObject.Find("SoulNum").GetComponent<Text>();
+
+        soulAmountText.text = playerAmount.ToString() + "/" + neededSouls;
     }
 
     // Update is called once per frame
@@ -43,15 +48,25 @@ public class loadScenes : MonoBehaviour {
 
     public void trackAmount()
     {
-        if (soulShardOne.GetComponent<pickUp>().ifCollected == true || soulShardTwo.GetComponent<pickUp>().ifCollected == true || soulShardThree.GetComponent<pickUp>().ifCollected == true)
+        foreach (GameObject shard in soulShards)
         {
-            playerAmount = playerAmount + 1;
-            soulAmountText.text = playerAmount.ToString();
-            Debug.Log(playerAmount);
-            soulShardOne.GetComponent<pickUp>().ifCollected = false;
-            soulShardTwo.GetComponent<pickUp>().ifCollected = false;
-            soulShardThree.GetComponent<pickUp>().ifCollected = false;
+            if (shard.GetComponent<pickUp>().ifCollected == true)
+            {
+                playerAmount = playerAmount + 1;
+                soulAmountText.text = playerAmount.ToString() + "/" + neededSouls;
+                Debug.Log(playerAmount);
+                shard.GetComponent<pickUp>().ifCollected = false;
+            }
         }
+        //if (soulShardOne.GetComponent<pickUp>().ifCollected == true || soulShardTwo.GetComponent<pickUp>().ifCollected == true || soulShardThree.GetComponent<pickUp>().ifCollected == true)
+        //{
+        //    playerAmount = playerAmount + 1;
+        //    soulAmountText.text = playerAmount.ToString();
+        //    Debug.Log(playerAmount);
+        //    soulShardOne.GetComponent<pickUp>().ifCollected = false;
+        //    soulShardTwo.GetComponent<pickUp>().ifCollected = false;
+        //    soulShardThree.GetComponent<pickUp>().ifCollected = false;
+        //}
     }
 
 }
