@@ -9,21 +9,16 @@ public class pickUp : MonoBehaviour {
     public OnCollectHandler OnCollect;
 
     public AudioClip collectAudioClip;
-    public Sprite collectedSprite;
     public GameObject container;
     public float followDelay = .25f;
-    public float followFarRange = 5f;
+    public float moveSpeed = 1f;
+    public float targetYOffset = 1f;
 
     private GameObject followTarget;
 
     //For UI
     //Checks if anything has been picked up
     public bool ifCollected = false;
-    // Use this for initialization
-    void Start()
-    {
- 
-    }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -34,9 +29,10 @@ public class pickUp : MonoBehaviour {
             Destroy(GetComponent<CircleCollider2D>());
 
             ifCollected = true;
-            //followTarget = other.gameObject;
-            //followTarget = GameObject.Find("Cat");
-            //StartCoroutine(LerpFollow());
+            followTarget = other.gameObject;
+            followTarget = GameObject.Find("SnowDoor");
+            if(followTarget != null)
+                StartCoroutine(LerpFollow());
 
             GetComponent<ParticleSystem>().Play();
             GetComponent<AudioSource>().PlayOneShot(collectAudioClip);
@@ -50,9 +46,7 @@ public class pickUp : MonoBehaviour {
     {
         while (true)
         {
-            Vector3 deltaVector = followTarget.transform.position - container.transform.position;
-            float x = deltaVector.magnitude / followFarRange;
-            container.transform.position = Vector3.Lerp(container.transform.position, followTarget.transform.position, x);
+            container.transform.position = Vector3.MoveTowards(container.transform.position, followTarget.transform.position + (Vector3.up * targetYOffset), moveSpeed);
             yield return new WaitForSeconds(followDelay);
         }
     }
