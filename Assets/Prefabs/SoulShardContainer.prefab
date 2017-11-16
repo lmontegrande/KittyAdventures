@@ -67,8 +67,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1241305840896948}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.62, y: 0.03, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -13.10262, y: -5.673899, z: 0.296875}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4431366067125694}
@@ -199,10 +199,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectAudioClip: {fileID: 8300000, guid: f17f5cd0771627349917320acfd70c2e, type: 3}
-  collectedSprite: {fileID: 21300000, guid: 68b0159974b8f1c4fabb133d28ac2a9d, type: 3}
   container: {fileID: 1241305840896948}
   followDelay: 0.1
-  followFarRange: 20
+  moveSpeed: 1
+  targetYOffset: 2
   ifCollected: 0
 --- !u!198 &198576662365609780
 ParticleSystem:
@@ -264,7 +264,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 89787484
+  randomSeed: 467192532
   InitialModule:
     serializedVersion: 3
     enabled: 1
