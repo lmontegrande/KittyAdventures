@@ -138,11 +138,11 @@ public abstract class PlayerControlledCharacter : Character
         if (isBeingTethered)
             return;
 
-        if (isHolding)
-        {
-            _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
-            return;
-        }
+        //if (isHolding)
+        //{
+        //    _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
+        //    return;
+        //}
 
         Vector2 axisInput = new Vector2(Input.GetAxisRaw(playerController.ToString() + "_Horizontal"), Input.GetAxisRaw(playerController.ToString() + "_Vertical"));
         if ((axisInput.x > 0 && isRightTouching) || (axisInput.x < 0 && isLeftTouching))
@@ -150,7 +150,7 @@ public abstract class PlayerControlledCharacter : Character
             axisInput = new Vector2(0, axisInput.y);
         }
 
-        if (isTouchingladder)
+        if (isTouchingladder && !isHolding)
         {
             if (Mathf.Abs(axisInput.y) > 0)
             {

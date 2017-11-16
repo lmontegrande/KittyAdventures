@@ -97,6 +97,9 @@ public class SoulRope : MonoBehaviour {
         girl.GetComponent<Rigidbody2D>().velocity += (Vector2)Vector3.Lerp(applyGirlVelocity, Vector3.zero, 1 / deltaVector.magnitude);
         girl.GetComponent<Rigidbody2D>().velocity += applyGirlVelocity;
         girl.GetComponent<Girl>().isBeingPulled = true;
+
+        if (deltaVector.magnitude > 1f)
+            cat.GetComponent<Cat>().AimTornado(-deltaVector);
     }
 
     private void LetGo()
