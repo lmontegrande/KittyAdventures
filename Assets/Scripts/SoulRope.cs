@@ -94,7 +94,7 @@ public class SoulRope : MonoBehaviour {
         applyGirlVelocity = (Vector2)(girlToCatVector) * rubberBandingFloat;
 
 
-        //girl.GetComponent<Rigidbody2D>().velocity += (Vector2)Vector3.Lerp(applyGirlVelocity, Vector3.zero, distanceAllowed / deltaVector.magnitude);
+        girl.GetComponent<Rigidbody2D>().velocity += (Vector2)Vector3.Lerp(applyGirlVelocity, Vector3.zero, 1 / deltaVector.magnitude);
         girl.GetComponent<Rigidbody2D>().velocity += applyGirlVelocity;
         girl.GetComponent<Girl>().isBeingPulled = true;
     }
