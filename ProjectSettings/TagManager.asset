@@ -11,6 +11,7 @@ TagManager:
   - Chest
   - Ledge
   - Key
+  - Shard
   layers:
   - Default
   - TransparentFX

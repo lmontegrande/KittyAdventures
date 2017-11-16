@@ -16,8 +16,7 @@ public class loadScenes : MonoBehaviour {
     public Text soulAmountText;
     // Use this for initialization
     void Start() {
-
-        
+       
     }
 
     // Update is called once per frame
