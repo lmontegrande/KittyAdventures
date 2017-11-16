@@ -61,7 +61,14 @@ public abstract class PlayerControlledCharacter : Character
     }
 
     public virtual void Update()
+<<<<<<< Updated upstream
     {        
+=======
+    {
+
+        HandlePlayerSwitch();
+
+>>>>>>> Stashed changes
         if (!(isLedgeClimbing || isBeingHeld || isDead || isGamePaused || playerController == PlayerController.NONE))
         {
             HandlePlayerSwitch();
@@ -97,7 +104,7 @@ public abstract class PlayerControlledCharacter : Character
     {
         isGamePaused = false;
     }
-    
+
     private void HandlePlayerSwitch()
     {
         bool pauseButtonPressed = Input.GetButtonDown("Pause");
@@ -125,7 +132,7 @@ public abstract class PlayerControlledCharacter : Character
         bool skillButtonPressed = Input.GetButton(playerController.ToString() + "_Skill");
         bool skillButtonReleased = Input.GetButtonUp(playerController.ToString() + "_Skill");
 
-        if (jumpButtonPressed && isGrounded)    
+        if (jumpButtonPressed && isGrounded)
             Jump();
         if (skillButtonPressed)
             UseSkill();
@@ -167,7 +174,7 @@ public abstract class PlayerControlledCharacter : Character
         _animator.SetFloat("movement", _rigidbody2D.velocity.magnitude);
 
         if (direction.x > 0)
-        { 
+        {
             if (direction.x <= -0.1)
             {
                 _spriteRenderer.flipX = isSpritesFlipped ? false : true;
@@ -178,7 +185,7 @@ public abstract class PlayerControlledCharacter : Character
                 _spriteRenderer.flipX = isSpritesFlipped ? true : false;
                 isFacingRight = true;
             }
-        } else { 
+        } else {
             if (_rigidbody2D.velocity.x <= -0.1)
             {
                 _spriteRenderer.flipX = isSpritesFlipped ? false : true;

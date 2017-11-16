@@ -11,7 +11,13 @@ TagManager:
   - Chest
   - Ledge
   - Key
+<<<<<<< Updated upstream
   - Shard
+=======
+  - OldDog
+  - Ghost
+  - CatBody
+>>>>>>> Stashed changes
   layers:
   - Default
   - TransparentFX
@@ -25,7 +31,7 @@ TagManager:
   - Boundaries
   - Background
   - Enemy
-  - 
+  - Ghost
   - 
   - 
   - 

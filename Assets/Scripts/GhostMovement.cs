@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DogMovement : Character
+public class GhostMovement : Character
 {
   public Transform[] patrolPoints;
   public float currentSpeed = 0.01f;
@@ -14,13 +14,12 @@ public class DogMovement : Character
   int currentPoint;
   bool isPaused = false;
   bool isCoroutineStarted = false;
-  string dogState = "patrol";  // bark, kill
+  string ghostState = "patrol";
   bool firstBark = true;
   Animator anim;
   private AudioSource source;
   public AudioClip warn;
   public AudioClip kill;
-
   public override void Pause()
   {
     isPaused = true;
@@ -35,38 +34,38 @@ public class DogMovement : Character
   {
     source = GetComponent<AudioSource>();
   }
-
-  void Start ()
+	void Start ()
   {
-    dogState = "patrol";
+    ghostState = "patrol";
     anim = GetComponent<Animator> ();
     StartCoroutine ("Patrol");
     // anim.SetBool("Running", true);
-  }
+	}
 
-  void Update ()
+	// Update is called once per frame
+	void Update ()
   {
     RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.localScale.x * Vector2.right, sight, 1 << LayerMask.NameToLayer("Players"));
 
-    // Debug.Log(dogState);
-    // Debug.Log(checkTimeWait);
+    // Debug.Log(hit.collider.gameObject.tag);
 
-    if (dogState == "patrol")
+    if (ghostState == "patrol")
     {
       checkTimeWait = 5f;
     }
 
     // if dog has seen the player
-    //if (hit.collider != null && (hit.collider.name == "RightCollider" || hit.collider.name == "LeftCollider" || hit.collider.name == "FootCollider"))
-    if (hit.collider != null && (hit.collider.tag == "CatBody"))
+    if (hit.collider != null && (hit.collider.name == "RightCollider" || hit.collider.name == "LeftCollider" || hit.collider.name == "FootCollider"))
     {
-      if (dogState == "patrol")
+      // Debug.Log("see the girl");
+      if (ghostState == "patrol")
       {
         alarmTimeWait = 3f;
         // anim.SetBool("Running", false);
-        dogState = "bark";
+        ghostState = "bark";
+        firstBark = true;
       }
-      else if (dogState == "bark")
+      else if (ghostState == "bark")
       {
         if (firstBark)
         {
@@ -87,23 +86,23 @@ public class DogMovement : Character
         {
           source.PlayOneShot(kill, 0.6f);
           alarmTimeWait = 3f;
-          dogState = "kill";
+          ghostState = "kill";
         }
       }
-      else // suppose to be check
+      else // suppose to check
       {
         alarmTimeWait = 3f;
-        dogState = "bark";
+        ghostState = "bark";
       }
     }
 
     // player out of the dog's sight
-    if (hit.collider == null && dogState == "bark")
+    if (hit.collider == null && ghostState == "bark")
     {
-      dogState = "check";
+      ghostState = "check";
     }
 
-    if (dogState == "check")
+    if (ghostState == "check")
     {
       firstBark = true;
 
@@ -119,7 +118,7 @@ public class DogMovement : Character
       if (checkTimeWait <= 0.1f)
       {
         checkTimeWait = 5f;
-        dogState = "patrol";
+        ghostState = "patrol";
         // anim.SetBool("Running", true);
         StartCoroutine("Patrol");
       }
@@ -128,20 +127,21 @@ public class DogMovement : Character
       if (hit.collider != null && (hit.collider.name == "RightCollider" || hit.collider.name == "LeftCollider" || hit.collider.name == "FootCollider"))
       {
         checkTimeWait = 5f;
-        dogState = "bark";
+        ghostState = "bark";
       }
       checkTimeWait -= Time.deltaTime;
     }
 
-    if (dogState == "kill")
+    if (ghostState == "kill")
     {
       // anim.SetBool("Running", true);
-      dogState = "patrol";
+      ghostState = "patrol";
       firstBark = true;
       Kill(hit);
       StartCoroutine("Patrol");
     }
-  }
+
+	}
 
   IEnumerator Patrol ()
   {
@@ -185,7 +185,7 @@ public class DogMovement : Character
 
   void DestroyPlayer(RaycastHit2D col)
   {
-    GameObject.Find("Cat").GetComponent<Cat>().Die();
+    GameObject.Find("Girl").GetComponent<Girl>().Die();
   }
 
   void OnDrawGizmos()
