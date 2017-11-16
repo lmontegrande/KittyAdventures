@@ -50,6 +50,8 @@ public class Girl : PlayerControlledCharacter
     protected override void ReleaseSkill()
     {
         Vector2 axisInput = new Vector2(Input.GetAxisRaw(playerController.ToString() + "_Horizontal"), Input.GetAxisRaw(playerController.ToString() + "_Vertical"));
+        if (axisInput.magnitude == 0)
+            axisInput = Vector2.up;
         if (cat != null && cat.isBeingHeld)
         {
             throwAimArrow.SetActive(false);

@@ -135,8 +135,14 @@ public abstract class PlayerControlledCharacter : Character
 
     private void HandleAxisInput()
     {
-        if (isHolding || isBeingThrown || isBeingPulled || isBeingTethered)
+        if (isBeingTethered)
             return;
+
+        //if (isHolding)
+        //{
+        //    _rigidbody2D.velocity = new Vector2(0, _rigidbody2D.velocity.y);
+        //    return;
+        //}
 
         Vector2 axisInput = new Vector2(Input.GetAxisRaw(playerController.ToString() + "_Horizontal"), Input.GetAxisRaw(playerController.ToString() + "_Vertical"));
         if ((axisInput.x > 0 && isRightTouching) || (axisInput.x < 0 && isLeftTouching))
@@ -144,7 +150,7 @@ public abstract class PlayerControlledCharacter : Character
             axisInput = new Vector2(0, axisInput.y);
         }
 
-        if (isTouchingladder)
+        if (isTouchingladder && !isHolding)
         {
             if (Mathf.Abs(axisInput.y) > 0)
             {
@@ -191,14 +197,20 @@ public abstract class PlayerControlledCharacter : Character
             }
         }
 
-        _rigidbody2D.velocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.velocity.y);
-        //if (isGrounded)
-        //    _rigidbody2D.velocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.velocity.y);
-        //else
-        //{
-        //    _rigidbody2D.velocity += new Vector2(direction.x * moveSpeed, 0);
-        //    _rigidbody2D.velocity = new Vector2(Mathf.Clamp(_rigidbody2D.velocity.x, -moveSpeed, moveSpeed), _rigidbody2D.velocity.y);
-        //}
+        if (isBeingThrown)
+        {
+            Vector2 sumVector = new Vector2((direction.x * moveSpeed) + _rigidbody2D.velocity.x, 0);
+            if (Mathf.Abs(sumVector.x) < Mathf.Abs(_rigidbody2D.velocity.x) || Mathf.Abs(sumVector.x) < moveSpeed)
+                _rigidbody2D.velocity += new Vector2((direction.x * moveSpeed), 0);
+        }
+        else if (isBeingPulled)
+        {
+            _rigidbody2D.velocity += new Vector2((direction.x * moveSpeed), 0);
+        }
+        else
+        {
+            _rigidbody2D.velocity = new Vector2(direction.x * moveSpeed, _rigidbody2D.velocity.y);
+        }
     }
 
     private void HandleLadder(Vector2 direction)
