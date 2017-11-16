@@ -29,13 +29,13 @@ public abstract class PlayerControlledCharacter : Character
     public bool isBeingThrown = false;
     public bool isLedgeClimbing = false;
     public bool isHolding = false;
+    public bool isLadderClimbing = false;
 
     private bool isLeftTouching;
     private bool isRightTouching;
     private bool isFacingRight = true;
     private bool isGrounded;
     private bool isGamePaused = false;
-    private bool isLadderClimbing = false;
 
     public void UpdateController(PlayerController p)
     {
@@ -61,12 +61,10 @@ public abstract class PlayerControlledCharacter : Character
     }
 
     public virtual void Update()
-    {
-
-        HandlePlayerSwitch();
-        
+    {        
         if (!(isLedgeClimbing || isBeingHeld || isDead || isGamePaused || playerController == PlayerController.NONE))
         {
+            HandlePlayerSwitch();
             HandleAxisInput();
             HandleButtonInput();
         }
@@ -121,6 +119,8 @@ public abstract class PlayerControlledCharacter : Character
 
     private void HandleButtonInput()
     {
+        if (isLadderClimbing) return;
+
         bool jumpButtonPressed = Input.GetButtonDown(playerController.ToString() + "_Jump");
         bool skillButtonPressed = Input.GetButton(playerController.ToString() + "_Skill");
         bool skillButtonReleased = Input.GetButtonUp(playerController.ToString() + "_Skill");
@@ -141,23 +141,19 @@ public abstract class PlayerControlledCharacter : Character
         Vector2 axisInput = new Vector2(Input.GetAxisRaw(playerController.ToString() + "_Horizontal"), Input.GetAxisRaw(playerController.ToString() + "_Vertical"));
         if ((axisInput.x > 0 && isRightTouching) || (axisInput.x < 0 && isLeftTouching))
         {
-            axisInput = Vector2.zero;
+            axisInput = new Vector2(0, axisInput.y);
         }
 
         if (isTouchingladder)
         {
-            if (axisInput.y > 0)
+            if (Mathf.Abs(axisInput.y) > 0)
             {
-                isLadderClimbing = true;
-                _animator.SetBool("isClimbing", true);
-                _rigidbody2D.gravityScale = 0;
+                StartLadderClimb();
             }
         }
         else
         {
-            isLadderClimbing = false;
-            _animator.SetBool("isClimbing", false);
-            _rigidbody2D.gravityScale = 4;
+            StopLadderClimb();
         }
 
         if (isLadderClimbing)
@@ -210,6 +206,20 @@ public abstract class PlayerControlledCharacter : Character
         _rigidbody2D.velocity = new Vector2(direction.x, direction.y) * climbingSpeed;
     }
 
+    private void StartLadderClimb()
+    {
+        isLadderClimbing = true;
+        _animator.SetBool("isClimbing", true);
+        _rigidbody2D.gravityScale = 0;
+    }
+
+    private void StopLadderClimb()
+    {
+        isLadderClimbing = false;
+        _animator.SetBool("isClimbing", false);
+        _rigidbody2D.gravityScale = 4;
+    }
+
     private void HandleLedge(GameObject ledgeTile)
     {
         Vector2 axisInput = new Vector2(Input.GetAxisRaw(playerController.ToString() + "_Horizontal"), Input.GetAxisRaw(playerController.ToString() + "_Vertical"));
@@ -250,8 +260,8 @@ public abstract class PlayerControlledCharacter : Character
     private void Land()
     {
         _animator.SetBool("isJumping", false);
-        isLadderClimbing = false;
         isBeingThrown = false;
+        StopLadderClimb();
     }
 
     public abstract void LadderEnter(bool isEnter);

@@ -28,7 +28,7 @@ GameObject:
   - component: {fileID: 198509711370184386}
   m_Layer: 0
   m_Name: soul_Shard
-  m_TagString: Untagged
+  m_TagString: Shard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,7 +107,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1750159464179558}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.47, y: 0.58, z: 0}
+  m_LocalPosition: {x: -16.6, y: 22.5, z: 0}
   m_LocalScale: {x: 0.33614343, y: 1.0478226, z: 0.26195565}
   m_Children: []
   m_Father: {fileID: 4211160575385328}
@@ -120,7 +120,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1294238216732924}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.80127454, y: -0.6640729, z: 0}
+  m_LocalPosition: {x: -0.74, y: 15.84824, z: 0}
   m_LocalScale: {x: 0.77929723, y: 0.25, z: 1}
   m_Children:
   - {fileID: 4359266518509724}
@@ -149,7 +149,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1215063702105274}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.11, y: 0.1, z: -0.0035587545}
+  m_LocalPosition: {x: 4.47, y: 7.3, z: -0.0035587545}
   m_LocalScale: {x: 0.6118007, y: 1.9070983, z: 0.47677457}
   m_Children:
   - {fileID: 4273778161053640}
@@ -208,7 +208,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -223,7 +223,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 2.13, y: 1.71}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.2
 --- !u!82 &82061995406547706
 AudioSource:
   m_ObjectHideFlags: 1
@@ -350,8 +350,7 @@ MonoBehaviour:
   container: {fileID: 1215063702105274}
   followDelay: 0.1
   followFarRange: 20
-  soulAmountText: {fileID: 0}
-  soulCounter: 0
+  ifCollected: 0
 --- !u!114 &114434871079726014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -377,6 +376,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   openSprite: {fileID: 21300000, guid: 78a790cd776279442a5f5ad8a6102a4e, type: 3}
   chestIsOpen: 0
+  keyAsset: {fileID: 1750159464179558}
+  gotKey: {fileID: 0}
 --- !u!198 &198509711370184386
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -3781,7 +3782,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: a7da648102be1e647ab8044edc5cc2ea, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3869,7 +3870,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 41c9165dca99ccc46b8a08657493c0a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

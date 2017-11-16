@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 198576662365609780}
   m_Layer: 0
   m_Name: soul_Shard
-  m_TagString: Untagged
+  m_TagString: Shard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -203,8 +203,7 @@ MonoBehaviour:
   container: {fileID: 1241305840896948}
   followDelay: 0.1
   followFarRange: 20
-  soulAmountText: {fileID: 0}
-  soulCounter: 0
+  ifCollected: 0
 --- !u!198 &198576662365609780
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -265,7 +264,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1659229746
+  randomSeed: 89787484
   InitialModule:
     serializedVersion: 3
     enabled: 1
