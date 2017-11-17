@@ -137,7 +137,7 @@ public class GhostMovement : Character
     if (ghostState == "kill")
     {
       anim.SetBool("Attacking", true);
-      // anim.SetBool("Running", true);
+      transform.position = Vector2.MoveTowards(transform.position, new Vector2(Mathf.Abs(hit.distance) * transform.localScale.x, transform.position.y), currentSpeed * 2);
       ghostState = "patrol";
       firstBark = true;
       Kill(hit);

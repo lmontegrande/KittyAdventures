@@ -134,6 +134,8 @@ public class DogMovement : Character
 
     if (dogState == "kill")
     {
+      transform.position = Vector2.MoveTowards(transform.position, new Vector2(Mathf.Abs(hit.distance) * transform.localScale.x, transform.position.y), currentSpeed * 2);
+
       anim.SetBool("Running", true);
       dogState = "patrol";
       firstBark = true;
