@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Floor
+  - Wall
+  - Door
+  - Switch
+  - Chest
+  - Ledge
+  - Key
+  - OldDog
+  - Ghost
+  - CatBody
+  - Shard
+  - GirlBody
+  - DeathParticle
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Players
+  - Boundaries
+  - Background
+  - Enemy
+  - Ghost
+  - Enviroment
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2594638891
+    locked: 0
+  - name: Gameplay
+    uniqueID: 2632820959
+    locked: 0
+  - name: Foreground
+    uniqueID: 2908715561
+    locked: 0
+  - name: UI
+    uniqueID: 3875834747
+    locked: 0
