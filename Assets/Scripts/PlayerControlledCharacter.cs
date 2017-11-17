@@ -9,6 +9,7 @@ public abstract class PlayerControlledCharacter : Character
 
     public int health = 5;
     public float moveSpeed = 5f;
+    public float slowSpeed = 2f;
     public float climbingSpeed = 5f;
     public float jumpForce = 5f;
     public float airControl = 2f;
@@ -36,6 +37,7 @@ public abstract class PlayerControlledCharacter : Character
     private bool isFacingRight = true;
     private bool isGrounded;
     private bool isGamePaused = false;
+    protected float startingSpeed;
 
     public void UpdateController(PlayerController p)
     {
@@ -56,6 +58,8 @@ public abstract class PlayerControlledCharacter : Character
         rightSideCollider.OnSideEnter += () => { isRightTouching = true; };
         rightSideCollider.OnSideExit += () => { isRightTouching = false; };
         rightSideCollider.OnLedgeEnter += HandleLedge;
+
+        startingSpeed = moveSpeed;
 
         //base.Start();
     }

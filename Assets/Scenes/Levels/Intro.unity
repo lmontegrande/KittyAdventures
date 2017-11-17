@@ -658,6 +658,11 @@ Prefab:
       propertyPath: randomSeed
       value: 1122665545
       objectReference: {fileID: 0}
+    - target: {fileID: 114903594178828152, guid: ffe89e6ee65ab3f4f8290e1fdfa690fd,
+        type: 2}
+      propertyPath: levelToLoad
+      value: Level3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ffe89e6ee65ab3f4f8290e1fdfa690fd, type: 2}
   m_IsPrefabParent: 0
@@ -2446,10 +2451,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 1976473756453980, guid: b317798438ad94949a6ec634bbec963c, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b317798438ad94949a6ec634bbec963c, type: 2}
   m_IsPrefabParent: 0
@@ -2731,6 +2732,11 @@ Prefab:
     - target: {fileID: 1005832646240648, guid: ffe89e6ee65ab3f4f8290e1fdfa690fd, type: 2}
       propertyPath: m_Name
       value: SnowDoor (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114903594178828152, guid: ffe89e6ee65ab3f4f8290e1fdfa690fd,
+        type: 2}
+      propertyPath: levelToLoad
+      value: Level2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ffe89e6ee65ab3f4f8290e1fdfa690fd, type: 2}
@@ -11622,7 +11628,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1632674940499008, guid: e31dd39dfca6ddb48ac52d533ad27a5f, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e31dd39dfca6ddb48ac52d533ad27a5f, type: 2}

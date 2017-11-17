@@ -10,7 +10,10 @@ public class Girl : PlayerControlledCharacter
     public float throwAimArrowOffset = 3f;
     public float flightSpan = 1f;
     public float throwOffset = 1f;
+    public GameObject thoughtBubble;
+    public AudioClip throwAudioClip;
 
+    private AudioSource _audioSource;
     private Cat cat;
 
     public void OnTriggerEnter2D(Collider2D collision)
@@ -22,6 +25,8 @@ public class Girl : PlayerControlledCharacter
     {
         base.Start();
         throwAimArrow.SetActive(false);
+        thoughtBubble.SetActive(false);
+        _audioSource = GetComponent<AudioSource>();
         cat = GameObject.Find("Cat").GetComponent<Cat>();
     }
 
@@ -50,10 +55,13 @@ public class Girl : PlayerControlledCharacter
     protected override void ReleaseSkill()
     {
         Vector2 axisInput = new Vector2(Input.GetAxisRaw(playerController.ToString() + "_Horizontal"), Input.GetAxisRaw(playerController.ToString() + "_Vertical"));
+        moveSpeed = startingSpeed;
+        thoughtBubble.SetActive(false);
         if (axisInput.magnitude == 0)
             axisInput = Vector2.up;
         if (cat != null && cat.isBeingHeld)
         {
+            _audioSource.PlayOneShot(throwAudioClip);
             throwAimArrow.SetActive(false);
             cat.transform.rotation = Quaternion.identity;
             cat.transform.position = transform.position + (Vector3) (axisInput.normalized * throwOffset);
@@ -71,6 +79,9 @@ public class Girl : PlayerControlledCharacter
         axisInput = axisInput.magnitude == 0 ? Vector2.up : axisInput;
         if (cat != null && (cat.transform.position - transform.position).magnitude < grabDistance)
         {
+            cat.GetGrabbed();
+            thoughtBubble.SetActive(false);
+            moveSpeed = slowSpeed;
             if (axisInput.magnitude > 0)
             {
                 throwAimArrow.SetActive(true);
@@ -86,6 +97,10 @@ public class Girl : PlayerControlledCharacter
             //cat.transform.rotation = Quaternion.Euler(0,0,180);
             cat.transform.right = axisInput.normalized;
             cat.GetComponent<Rigidbody2D>().MovePosition(transform.position + (Vector3.up * flightSpan));
+        }
+        else
+        {
+            thoughtBubble.SetActive(true);
         }
     }
 }
