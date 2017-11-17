@@ -14,6 +14,8 @@ TagManager:
   - OldDog
   - Ghost
   - CatBody
+  - Shard
+  - GirlBody
   layers:
   - Default
   - TransparentFX
@@ -28,7 +30,7 @@ TagManager:
   - Background
   - Enemy
   - Ghost
-  - 
+  - Enviroment
   - 
   - 
   - 
