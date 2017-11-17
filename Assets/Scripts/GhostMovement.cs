@@ -38,8 +38,7 @@ public class GhostMovement : Character
     ghostState = "patrol";
     anim = GetComponent<Animator> ();
     StartCoroutine ("Patrol");
-    // StartCoroutine ("Shake");
-    anim.SetBool("Attacking", true);
+    anim.SetBool("Attacking", false);
 	}
 
 	// Update is called once per frame
@@ -61,7 +60,7 @@ public class GhostMovement : Character
       if (ghostState == "patrol")
       {
         alarmTimeWait = 2f;
-        anim.SetBool("Attacking", true);
+        anim.SetBool("Attacking", false);
         ghostState = "bark";
         firstBark = true;
       }
@@ -188,7 +187,8 @@ public class GhostMovement : Character
   {
     if (col.gameObject.name == "Girl" || col.gameObject.tag == "GirlBody")
     {
-      GameObject.Find("Cat").GetComponent<Cat>().Die();
+        source.PlayOneShot(kill, 1f);
+        GameObject.Find("Cat").GetComponent<Cat>().Die();
     }
   }
 

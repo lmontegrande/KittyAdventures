@@ -195,6 +195,7 @@ public class DogMovement : Character
 
   void DestroyPlayer(RaycastHit2D col)
   {
+    source.PlayOneShot(kill, 1f);
     GameObject.Find("Cat").GetComponent<Cat>().Die();
   }
 
