@@ -11,7 +11,9 @@ TagManager:
   - Chest
   - Ledge
   - Key
-  - Shard
+  - OldDog
+  - Ghost
+  - CatBody
   layers:
   - Default
   - TransparentFX
@@ -25,7 +27,7 @@ TagManager:
   - Boundaries
   - Background
   - Enemy
-  - 
+  - Ghost
   - 
   - 
   - 

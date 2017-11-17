@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour {
         {
             character.GetComponent<PlayerControlledCharacter>().Respawn(startingPoint.transform.position);
         }
+        //LoadLevel(SceneManager.GetActiveScene().name);
     }
 
     public void LoadLevel(string levelName)

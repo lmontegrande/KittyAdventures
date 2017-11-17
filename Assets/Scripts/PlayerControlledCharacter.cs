@@ -23,6 +23,7 @@ public abstract class PlayerControlledCharacter : Character
     protected SpriteRenderer _spriteRenderer;
     public FootCollider foot;
     public SideCollider leftSideCollider, rightSideCollider;
+    public GameObject deathParticles;
     public bool isTouchingladder = false;
     public bool isBeingPulled = false;
     public bool isBeingTethered = false;
@@ -87,7 +88,7 @@ public abstract class PlayerControlledCharacter : Character
     public void Die()
     {
         isDead = true;
-        _animator.SetBool("isDead", true);
+        //_animator.SetBool("isDead", true);
         _rigidbody2D.velocity = Vector2.zero;
         GameManager.instance.GameOver();
     }
@@ -288,9 +289,18 @@ public abstract class PlayerControlledCharacter : Character
 
     public void Respawn(Vector3 respawnLocation)
     {
-        if (isDead)
-            transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
-        //transform.position = respawnLocation;
+        StartCoroutine(MoveTo(respawnLocation));   
+    }
+
+    public IEnumerator MoveTo(Vector3 target)
+    {
+        GameObject deathParticleInstance = Instantiate(deathParticles, transform.position, Quaternion.identity);
+        while ((deathParticleInstance.transform.position - target).magnitude > .1f)
+        {
+            deathParticleInstance.transform.position = Vector3.MoveTowards(deathParticleInstance.transform.position, target, 5 * Time.deltaTime);
+            yield return null;
+        }
+
         isDead = false;
     }
 }
