@@ -9,7 +9,9 @@ public class treasureSoul : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        treasure.SetActive(true);
+        treasure.SetActive(false);
+        treasure.GetComponent<SpriteRenderer>().enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -17,6 +19,7 @@ public class treasureSoul : MonoBehaviour {
         if (GetComponent<openChest>().chestIsOpen == true)
         {
             treasure.SetActive(true);
+            treasure.GetComponent<SpriteRenderer>().enabled = true;
 
         }
 	}
