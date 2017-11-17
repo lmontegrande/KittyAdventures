@@ -13,7 +13,6 @@ public class DogMovement : Character
   public float force;
   int currentPoint;
   bool isPaused = false;
-  bool isCoroutineStarted = false;
   string dogState = "patrol";  // bark, kill
   bool firstBark = true;
   Animator anim;
@@ -42,7 +41,7 @@ public class DogMovement : Character
     dogState = "patrol";
     anim = GetComponent<Animator> ();
     StartCoroutine ("Patrol");
-    // anim.SetBool("Running", true);
+    anim.SetBool("Running", true);
   }
 
   void Update ()
@@ -61,7 +60,7 @@ public class DogMovement : Character
       if (dogState == "patrol")
       {
         alarmTimeWait = 2f;
-        // anim.SetBool("Running", false);
+        anim.SetBool("Running", false);
         dogState = "bark";
         firstBark = true;
       }
@@ -120,7 +119,7 @@ public class DogMovement : Character
       {
         checkTimeWait = 5f;
         dogState = "patrol";
-        // anim.SetBool("Running", true);
+        anim.SetBool("Running", true);
         StartCoroutine("Patrol");
       }
 
@@ -135,7 +134,7 @@ public class DogMovement : Character
 
     if (dogState == "kill")
     {
-      // anim.SetBool("Running", true);
+      anim.SetBool("Running", true);
       dogState = "patrol";
       firstBark = true;
       Kill(hit);
@@ -150,9 +149,9 @@ public class DogMovement : Character
       if (transform.position.x == patrolPoints[currentPoint].position.x)
       {
         currentPoint++;
-        // anim.SetBool("Running", false);
+        anim.SetBool("Running", false);
         yield return new WaitForSeconds(patrolTimeWait);
-        // anim.SetBool("Running", true);
+        anim.SetBool("Running", true);
       }
 
       if (currentPoint >= patrolPoints.Length)

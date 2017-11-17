@@ -39,7 +39,8 @@ public class GhostMovement : Character
     ghostState = "patrol";
     anim = GetComponent<Animator> ();
     StartCoroutine ("Patrol");
-    // anim.SetBool("Running", true);
+    // StartCoroutine ("Shake");
+    anim.SetBool("Attacking", true);
 	}
 
 	// Update is called once per frame
@@ -61,7 +62,7 @@ public class GhostMovement : Character
       if (ghostState == "patrol")
       {
         alarmTimeWait = 2f;
-        // anim.SetBool("Running", false);
+        anim.SetBool("Attacking", true);
         ghostState = "bark";
         firstBark = true;
       }
@@ -105,6 +106,7 @@ public class GhostMovement : Character
     if (ghostState == "check")
     {
       firstBark = true;
+      anim.SetBool("Attacking", true);
 
       if (checkTimeWait <= 4f && checkTimeWait > 2f)
       {
@@ -119,7 +121,7 @@ public class GhostMovement : Character
       {
         checkTimeWait = 5f;
         ghostState = "patrol";
-        // anim.SetBool("Running", true);
+        anim.SetBool("Attacking", false);
         StartCoroutine("Patrol");
       }
 
@@ -134,6 +136,7 @@ public class GhostMovement : Character
 
     if (ghostState == "kill")
     {
+      anim.SetBool("Attacking", true);
       // anim.SetBool("Running", true);
       ghostState = "patrol";
       firstBark = true;
