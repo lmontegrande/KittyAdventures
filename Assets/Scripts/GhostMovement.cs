@@ -10,7 +10,6 @@ public class GhostMovement : Character
   float alarmTimeWait = 2f;
   float checkTimeWait = 5f;
   public float sight = 1.2f;
-  public float force;
   int currentPoint;
   bool isPaused = false;
   string ghostState = "patrol";
