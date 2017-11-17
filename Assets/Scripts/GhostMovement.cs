@@ -7,13 +7,12 @@ public class GhostMovement : Character
   public Transform[] patrolPoints;
   public float currentSpeed = 0.01f;
   public float patrolTimeWait = 2f;
-  float alarmTimeWait = 3f;
+  float alarmTimeWait = 2f;
   float checkTimeWait = 5f;
   public float sight = 1.2f;
   public float force;
   int currentPoint;
   bool isPaused = false;
-  bool isCoroutineStarted = false;
   string ghostState = "patrol";
   bool firstBark = true;
   Animator anim;
@@ -32,6 +31,7 @@ public class GhostMovement : Character
 
   public override void Awake()
   {
+    base.Awake();
     source = GetComponent<AudioSource>();
   }
 	void Start ()
@@ -60,7 +60,7 @@ public class GhostMovement : Character
       // Debug.Log("see the girl");
       if (ghostState == "patrol")
       {
-        alarmTimeWait = 3f;
+        alarmTimeWait = 2f;
         // anim.SetBool("Running", false);
         ghostState = "bark";
         firstBark = true;
@@ -74,24 +74,24 @@ public class GhostMovement : Character
         }
 
         StopCoroutine("Patrol");
-        if (alarmTimeWait == 3f)
+        if (alarmTimeWait == 2f)
         {
           alarmTimeWait -= Time.deltaTime;
         }
-        if (alarmTimeWait < 3 && alarmTimeWait > 0)
+        if (alarmTimeWait < 2 && alarmTimeWait > 0)
         {
           alarmTimeWait -= Time.deltaTime;
         }
         else
         {
           source.PlayOneShot(kill, 0.6f);
-          alarmTimeWait = 3f;
+          alarmTimeWait = 2f;
           ghostState = "kill";
         }
       }
       else // suppose to check
       {
-        alarmTimeWait = 3f;
+        alarmTimeWait = 2f;
         ghostState = "bark";
       }
     }

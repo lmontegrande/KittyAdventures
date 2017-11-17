@@ -7,7 +7,7 @@ public class DogMovement : Character
   public Transform[] patrolPoints;
   public float currentSpeed = 0.01f;
   public float patrolTimeWait = 2f;
-  float alarmTimeWait = 3f;
+  float alarmTimeWait = 2f;
   float checkTimeWait = 5f;
   public float sight = 1.2f;
   public float force;
@@ -33,6 +33,7 @@ public class DogMovement : Character
 
   public override void Awake()
   {
+    base.Awake();
     source = GetComponent<AudioSource>();
   }
 
@@ -62,9 +63,10 @@ public class DogMovement : Character
     {
       if (dogState == "patrol")
       {
-        alarmTimeWait = 3f;
+        alarmTimeWait = 2f;
         // anim.SetBool("Running", false);
         dogState = "bark";
+        firstBark = true;
       }
       else if (dogState == "bark")
       {
@@ -75,24 +77,24 @@ public class DogMovement : Character
         }
 
         StopCoroutine("Patrol");
-        if (alarmTimeWait == 3f)
+        if (alarmTimeWait == 2f)
         {
           alarmTimeWait -= Time.deltaTime;
         }
-        if (alarmTimeWait < 3 && alarmTimeWait > 0)
+        if (alarmTimeWait < 2 && alarmTimeWait > 0)
         {
           alarmTimeWait -= Time.deltaTime;
         }
         else
         {
           source.PlayOneShot(kill, 0.6f);
-          alarmTimeWait = 3f;
+          alarmTimeWait = 2f;
           dogState = "kill";
         }
       }
       else // suppose to be check
       {
-        alarmTimeWait = 3f;
+        alarmTimeWait = 2f;
         dogState = "bark";
       }
     }
@@ -181,6 +183,14 @@ public class DogMovement : Character
     // moving distance calculation problem
     transform.position = Vector2.MoveTowards(transform.position, new Vector2(col.point.x, transform.position.y), 15 * Time.deltaTime);
     DestroyPlayer(col);
+  }
+
+  void OnCollisionEnter2D(Collision2D col)
+  {
+    if (col.gameObject.name == "Cat" || col.gameObject.tag == "CatBody")
+    {
+      GameObject.Find("Cat").GetComponent<Cat>().Die();
+    }
   }
 
   void DestroyPlayer(RaycastHit2D col)
