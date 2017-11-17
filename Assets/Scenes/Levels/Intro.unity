@@ -603,7 +603,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1810768382199588, guid: 0bfe03b5942ead444a2958ccb3a6e4a5, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0bfe03b5942ead444a2958ccb3a6e4a5, type: 2}
@@ -982,17 +982,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1114191312463778, guid: a6cad1d83f08f6045b36bab87c2222b4, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a6cad1d83f08f6045b36bab87c2222b4, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &114553028 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114289738707916354, guid: a6cad1d83f08f6045b36bab87c2222b4,
-    type: 2}
-  m_PrefabInternal: {fileID: 114553027}
-  m_Script: {fileID: 11500000, guid: 80a6b9bccaf74054192ed0b6ec8a66af, type: 3}
 --- !u!4 &121262526 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4261270687731944, guid: a0b038eeb6f564d4db1f670d2ac11d26,
@@ -4068,7 +4062,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1627110558798672, guid: 95be04f9dfb19bc47860aeb10961ae74, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 95be04f9dfb19bc47860aeb10961ae74, type: 2}
@@ -12005,7 +11999,7 @@ Prefab:
     - target: {fileID: 114899378700226948, guid: e31dd39dfca6ddb48ac52d533ad27a5f,
         type: 2}
       propertyPath: playOnStart
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114899378700226948, guid: e31dd39dfca6ddb48ac52d533ad27a5f,
         type: 2}
@@ -12020,7 +12014,8 @@ Prefab:
         type: 2}
       propertyPath: narratives.Array.data[5]
       value: 
-      objectReference: {fileID: 114553028}
+      objectReference: {fileID: 114289738707916354, guid: a6cad1d83f08f6045b36bab87c2222b4,
+        type: 2}
     - target: {fileID: 114899378700226948, guid: e31dd39dfca6ddb48ac52d533ad27a5f,
         type: 2}
       propertyPath: narrativeScenes.Array.data[1]
@@ -12036,7 +12031,8 @@ Prefab:
         type: 2}
       propertyPath: narratives.Array.data[7]
       value: 
-      objectReference: {fileID: 1626571654}
+      objectReference: {fileID: 114980590821882722, guid: 3dda00179fb4c234fa4dfc498812ecf4,
+        type: 2}
     - target: {fileID: 114899378700226948, guid: e31dd39dfca6ddb48ac52d533ad27a5f,
         type: 2}
       propertyPath: narratives.Array.data[8]
@@ -12073,6 +12069,11 @@ Prefab:
       value: 
       objectReference: {fileID: 114033199929372596, guid: b14d8e3729727174898b5f0eedafcb36,
         type: 2}
+    - target: {fileID: 114899378700226948, guid: e31dd39dfca6ddb48ac52d533ad27a5f,
+        type: 2}
+      propertyPath: narrativeScenes.Array.data[0]
+      value: 0,1,2,3,2,4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: e31dd39dfca6ddb48ac52d533ad27a5f, type: 2}
   m_IsPrefabParent: 0
@@ -12520,17 +12521,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1820368597987496, guid: 3dda00179fb4c234fa4dfc498812ecf4, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 3dda00179fb4c234fa4dfc498812ecf4, type: 2}
   m_IsPrefabParent: 0
---- !u!114 &1626571654 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114980590821882722, guid: 3dda00179fb4c234fa4dfc498812ecf4,
-    type: 2}
-  m_PrefabInternal: {fileID: 1626571653}
-  m_Script: {fileID: 11500000, guid: 80a6b9bccaf74054192ed0b6ec8a66af, type: 3}
 --- !u!1001 &1627665281
 Prefab:
   m_ObjectHideFlags: 0
