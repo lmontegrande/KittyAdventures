@@ -69,7 +69,7 @@ public class GhostMovement : Character
       {
         if (firstBark)
         {
-          source.PlayOneShot(warn, 0.6f);
+          source.PlayOneShot(warn, 1f);
           firstBark = false;
         }
 
@@ -84,7 +84,7 @@ public class GhostMovement : Character
         }
         else
         {
-          source.PlayOneShot(kill, 0.6f);
+          source.PlayOneShot(kill, 1f);
           alarmTimeWait = 2f;
           ghostState = "kill";
         }
@@ -138,7 +138,6 @@ public class GhostMovement : Character
       ghostState = "patrol";
       firstBark = true;
       Kill(hit);
-      StartCoroutine("Patrol");
     }
 
 	}
@@ -181,6 +180,14 @@ public class GhostMovement : Character
     // moving distance calculation problem
     transform.position = Vector2.MoveTowards(transform.position, new Vector2(col.point.x, transform.position.y), 15 * Time.deltaTime);
     DestroyPlayer(col);
+  }
+
+  void OnTriggerEnter2D(Collider2D col)
+  {
+    if (col.gameObject.name == "Girl" || col.gameObject.tag == "GirlBody")
+    {
+      GameObject.Find("Cat").GetComponent<Cat>().Die();
+    }
   }
 
   void DestroyPlayer(RaycastHit2D col)

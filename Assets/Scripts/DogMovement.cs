@@ -47,10 +47,7 @@ public class DogMovement : Character
 
   void Update ()
   {
-    RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.localScale.x * Vector2.right, sight, 1 << LayerMask.NameToLayer("Players"));
-
-    // Debug.Log(dogState);
-    // Debug.Log(checkTimeWait);
+    RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.localScale.x * Vector2.right, sight, 1 << LayerMask.NameToLayer("Players") | 1 << LayerMask.NameToLayer("Enviroment"));
 
     if (dogState == "patrol")
     {
@@ -72,11 +69,12 @@ public class DogMovement : Character
       {
         if (firstBark)
         {
-          source.PlayOneShot(warn, 0.6f);
+          source.PlayOneShot(warn, 1f);
           firstBark = false;
         }
 
         StopCoroutine("Patrol");
+
         if (alarmTimeWait == 2f)
         {
           alarmTimeWait -= Time.deltaTime;
@@ -87,7 +85,7 @@ public class DogMovement : Character
         }
         else
         {
-          source.PlayOneShot(kill, 0.6f);
+          source.PlayOneShot(kill, 1f);
           alarmTimeWait = 2f;
           dogState = "kill";
         }
@@ -185,7 +183,7 @@ public class DogMovement : Character
     DestroyPlayer(col);
   }
 
-  void OnCollisionEnter2D(Collision2D col)
+  void OnTriggerEnter2D(Collider2D col)
   {
     if (col.gameObject.name == "Cat" || col.gameObject.tag == "CatBody")
     {
