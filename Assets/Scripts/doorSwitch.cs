@@ -7,16 +7,9 @@ public class doorSwitch : MonoBehaviour {
     public GameObject door;
     public Sprite downSwitch; 
     public Sprite open_Door;
-
-	// Use this for initialization
-	void Start () {
-
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    public AudioClip buttonAudioClip;
+    public GameObject trail;
+    public float lineSpeed = .25f;
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
@@ -25,9 +18,26 @@ public class doorSwitch : MonoBehaviour {
         {
             //collision.GetComponent<BoxCollider2D>().enabled = false;
             //this.gameObject.SetActive(true);
+            GetComponent<AudioSource>().PlayOneShot(buttonAudioClip);
             transform.GetComponent<SpriteRenderer>().sprite = downSwitch;
-            door.GetComponent<BoxCollider2D>().enabled = false;
-            door.GetComponent<SpriteRenderer>().sprite = open_Door;
+            StartCoroutine(SendLineRenderer());
         }
+    }
+
+    public IEnumerator SendLineRenderer()
+    {
+        Vector3 startVector = transform.position;
+        Vector3 endVector = door.transform.position;
+        GameObject trailInstance = Instantiate(trail, transform.position, Quaternion.identity);
+        float timer = 0f;
+        while (timer <= lineSpeed)
+        {
+            timer += Time.deltaTime;
+            trailInstance.transform.position = Vector3.Lerp(startVector, endVector, timer/lineSpeed);
+            yield return null;
+        }
+        Destroy(trailInstance, trailInstance.GetComponent<TrailRenderer>().time);
+        door.GetComponent<BoxCollider2D>().enabled = false;
+        door.GetComponent<SpriteRenderer>().sprite = open_Door;
     }
 }

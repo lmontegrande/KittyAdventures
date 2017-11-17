@@ -28,6 +28,11 @@ public class Cat : PlayerControlledCharacter
         tornado.transform.up = direction;
     }
 
+    public void GetGrabbed()
+    {
+        ReleaseSkill();
+    }
+
     protected override void UseSkill()
     {
         if (usePull != null)

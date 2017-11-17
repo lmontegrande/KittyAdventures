@@ -9,6 +9,7 @@ public abstract class PlayerControlledCharacter : Character
 
     public int health = 5;
     public float moveSpeed = 5f;
+    public float slowSpeed = 2f;
     public float climbingSpeed = 5f;
     public float jumpForce = 5f;
     public float airControl = 2f;
@@ -22,6 +23,7 @@ public abstract class PlayerControlledCharacter : Character
     protected SpriteRenderer _spriteRenderer;
     public FootCollider foot;
     public SideCollider leftSideCollider, rightSideCollider;
+    public GameObject deathParticles;
     public bool isTouchingladder = false;
     public bool isBeingPulled = false;
     public bool isBeingTethered = false;
@@ -29,13 +31,14 @@ public abstract class PlayerControlledCharacter : Character
     public bool isBeingThrown = false;
     public bool isLedgeClimbing = false;
     public bool isHolding = false;
+    public bool isLadderClimbing = false;
 
     private bool isLeftTouching;
     private bool isRightTouching;
     private bool isFacingRight = true;
     private bool isGrounded;
     private bool isGamePaused = false;
-    private bool isLadderClimbing = false;
+    protected float startingSpeed;
 
     public void UpdateController(PlayerController p)
     {
@@ -57,16 +60,16 @@ public abstract class PlayerControlledCharacter : Character
         rightSideCollider.OnSideExit += () => { isRightTouching = false; };
         rightSideCollider.OnLedgeEnter += HandleLedge;
 
+        startingSpeed = moveSpeed;
+
         //base.Start();
     }
 
     public virtual void Update()
-    {
-
-        HandlePlayerSwitch();
-
+    {        
         if (!(isLedgeClimbing || isBeingHeld || isDead || isGamePaused || playerController == PlayerController.NONE))
         {
+            HandlePlayerSwitch();
             HandleAxisInput();
             HandleButtonInput();
         }
@@ -85,7 +88,7 @@ public abstract class PlayerControlledCharacter : Character
     public void Die()
     {
         isDead = true;
-        _animator.SetBool("isDead", true);
+        //_animator.SetBool("isDead", true);
         _rigidbody2D.velocity = Vector2.zero;
         GameManager.instance.GameOver();
     }
@@ -99,7 +102,7 @@ public abstract class PlayerControlledCharacter : Character
     {
         isGamePaused = false;
     }
-
+    
     private void HandlePlayerSwitch()
     {
         bool pauseButtonPressed = Input.GetButtonDown("Pause");
@@ -121,11 +124,13 @@ public abstract class PlayerControlledCharacter : Character
 
     private void HandleButtonInput()
     {
+        if (isLadderClimbing) return;
+
         bool jumpButtonPressed = Input.GetButtonDown(playerController.ToString() + "_Jump");
         bool skillButtonPressed = Input.GetButton(playerController.ToString() + "_Skill");
         bool skillButtonReleased = Input.GetButtonUp(playerController.ToString() + "_Skill");
 
-        if (jumpButtonPressed && isGrounded)
+        if (jumpButtonPressed && isGrounded)    
             Jump();
         if (skillButtonPressed)
             UseSkill();
@@ -147,23 +152,19 @@ public abstract class PlayerControlledCharacter : Character
         Vector2 axisInput = new Vector2(Input.GetAxisRaw(playerController.ToString() + "_Horizontal"), Input.GetAxisRaw(playerController.ToString() + "_Vertical"));
         if ((axisInput.x > 0 && isRightTouching) || (axisInput.x < 0 && isLeftTouching))
         {
-            axisInput = Vector2.zero;
+            axisInput = new Vector2(0, axisInput.y);
         }
 
         if (isTouchingladder && !isHolding)
         {
-            if (axisInput.y > 0)
+            if (Mathf.Abs(axisInput.y) > 0)
             {
-                isLadderClimbing = true;
-                _animator.SetBool("isClimbing", true);
-                _rigidbody2D.gravityScale = 0;
+                StartLadderClimb();
             }
         }
         else
         {
-            isLadderClimbing = false;
-            _animator.SetBool("isClimbing", false);
-            _rigidbody2D.gravityScale = 4;
+            StopLadderClimb();
         }
 
         if (isLadderClimbing)
@@ -177,7 +178,7 @@ public abstract class PlayerControlledCharacter : Character
         _animator.SetFloat("movement", _rigidbody2D.velocity.magnitude);
 
         if (direction.x > 0)
-        {
+        { 
             if (direction.x <= -0.1)
             {
                 _spriteRenderer.flipX = isSpritesFlipped ? false : true;
@@ -188,7 +189,7 @@ public abstract class PlayerControlledCharacter : Character
                 _spriteRenderer.flipX = isSpritesFlipped ? true : false;
                 isFacingRight = true;
             }
-        } else {
+        } else { 
             if (_rigidbody2D.velocity.x <= -0.1)
             {
                 _spriteRenderer.flipX = isSpritesFlipped ? false : true;
@@ -220,6 +221,20 @@ public abstract class PlayerControlledCharacter : Character
     private void HandleLadder(Vector2 direction)
     {
         _rigidbody2D.velocity = new Vector2(direction.x, direction.y) * climbingSpeed;
+    }
+
+    private void StartLadderClimb()
+    {
+        isLadderClimbing = true;
+        _animator.SetBool("isClimbing", true);
+        _rigidbody2D.gravityScale = 0;
+    }
+
+    private void StopLadderClimb()
+    {
+        isLadderClimbing = false;
+        _animator.SetBool("isClimbing", false);
+        _rigidbody2D.gravityScale = 4;
     }
 
     private void HandleLedge(GameObject ledgeTile)
@@ -262,8 +277,8 @@ public abstract class PlayerControlledCharacter : Character
     private void Land()
     {
         _animator.SetBool("isJumping", false);
-        isLadderClimbing = false;
         isBeingThrown = false;
+        StopLadderClimb();
     }
 
     public abstract void LadderEnter(bool isEnter);
@@ -271,4 +286,21 @@ public abstract class PlayerControlledCharacter : Character
     protected abstract void UseSkill();
 
     protected abstract void ReleaseSkill();
+
+    public void Respawn(Vector3 respawnLocation)
+    {
+        StartCoroutine(MoveTo(respawnLocation));   
+    }
+
+    public IEnumerator MoveTo(Vector3 target)
+    {
+        GameObject deathParticleInstance = Instantiate(deathParticles, transform.position, Quaternion.identity);
+        while ((deathParticleInstance.transform.position - target).magnitude > .1f)
+        {
+            deathParticleInstance.transform.position = Vector3.MoveTowards(deathParticleInstance.transform.position, target, 5 * Time.deltaTime);
+            yield return null;
+        }
+
+        isDead = false;
+    }
 }
