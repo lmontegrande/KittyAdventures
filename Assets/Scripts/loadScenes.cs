@@ -38,7 +38,7 @@ public class loadScenes : MonoBehaviour {
         {
             //loads next level
             loadLevel(nextLevel);
-            Debug.Log("I can reach!");
+            //Debug.Log("I can reach!");
         }
     }
     //loads the level
@@ -54,7 +54,7 @@ public class loadScenes : MonoBehaviour {
             {
                 playerAmount = playerAmount + 1;
                 soulAmountText.text = playerAmount.ToString() + "/" + neededSouls;
-                Debug.Log(playerAmount);
+                //Debug.Log(playerAmount);
                 shard.GetComponent<pickUp>().ifCollected = false;
             }
         }

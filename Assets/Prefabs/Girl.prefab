@@ -61,7 +61,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1496884409440142
 GameObject:
   m_ObjectHideFlags: 0
@@ -308,8 +308,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1941956852560472}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -12.02, y: -5, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.506, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
   m_Children:
   - {fileID: 4181795736044920}
@@ -733,7 +733,8 @@ MonoBehaviour:
   foot: {fileID: 114718646711524902}
   leftSideCollider: {fileID: 114773753524041412}
   rightSideCollider: {fileID: 114211045188531030}
-  deathParticles: {fileID: 1408661851324144}
+  deathParticlesPrefab: {fileID: 1311992912093760, guid: 9e137a43ea330ea4ab9f2e0d1fba6bc3,
+    type: 2}
   isTouchingladder: 0
   isBeingPulled: 0
   isBeingTethered: 0

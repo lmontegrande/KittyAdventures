@@ -103,7 +103,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1937638345714778}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 22.76905, y: 2.3408341, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224310042859947212}
@@ -179,7 +179,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Oh.. Hi there!
+  m_Text: Oh.. Not Again!
 --- !u!114 &114623649526696332
 MonoBehaviour:
   m_ObjectHideFlags: 1

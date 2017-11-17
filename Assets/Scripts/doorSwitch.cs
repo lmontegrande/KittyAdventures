@@ -21,6 +21,7 @@ public class doorSwitch : MonoBehaviour {
             GetComponent<AudioSource>().PlayOneShot(buttonAudioClip);
             transform.GetComponent<SpriteRenderer>().sprite = downSwitch;
             StartCoroutine(SendLineRenderer());
+            GetComponent<BoxCollider2D>().enabled = false;
         }
     }
 

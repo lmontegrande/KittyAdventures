@@ -23,7 +23,7 @@ public abstract class PlayerControlledCharacter : Character
     protected SpriteRenderer _spriteRenderer;
     public FootCollider foot;
     public SideCollider leftSideCollider, rightSideCollider;
-    public GameObject deathParticles;
+    public GameObject deathParticlesPrefab;
     public bool isTouchingladder = false;
     public bool isBeingPulled = false;
     public bool isBeingTethered = false;
@@ -37,7 +37,7 @@ public abstract class PlayerControlledCharacter : Character
     private bool isRightTouching;
     private bool isFacingRight = true;
     private bool isGrounded;
-    private bool isGamePaused = false;
+    public bool isGamePaused = false;
     protected float startingSpeed;
 
     public void UpdateController(PlayerController p)
@@ -87,7 +87,6 @@ public abstract class PlayerControlledCharacter : Character
 
     public void Die()
     {
-        isDead = true;
         //_animator.SetBool("isDead", true);
         _rigidbody2D.velocity = Vector2.zero;
         GameManager.instance.GameOver();
@@ -289,18 +288,35 @@ public abstract class PlayerControlledCharacter : Character
 
     public void Respawn(Vector3 respawnLocation)
     {
-        StartCoroutine(MoveTo(respawnLocation));   
+        if (!isDead)
+            StartCoroutine(MoveTo(respawnLocation));   
     }
 
     public IEnumerator MoveTo(Vector3 target)
     {
-        GameObject deathParticleInstance = Instantiate(deathParticles, transform.position, Quaternion.identity);
-        while ((deathParticleInstance.transform.position - target).magnitude > .1f)
+        GameObject deathParticleInstance = Instantiate(deathParticlesPrefab, transform.position, Quaternion.identity);
+        transform.position = target;
+        _rigidbody2D.velocity = Vector2.zero;
+        GetComponent<SpriteRenderer>().enabled = false;
+
+        yield return null;
+        isDead = true;
+        ReleaseSkill();
+
+        float timer = 0f;
+        float respawnTime = 3f;
+        while (timer < respawnTime)
         {
-            deathParticleInstance.transform.position = Vector3.MoveTowards(deathParticleInstance.transform.position, target, 5 * Time.deltaTime);
+            timer += Time.deltaTime;
+            deathParticleInstance.transform.position = Vector3.Lerp(deathParticleInstance.transform.position, target, timer/respawnTime);
             yield return null;
         }
 
+        transform.position = target;
+        _rigidbody2D.velocity = Vector2.zero;
+        GetComponent<SpriteRenderer>().enabled = true;
+        deathParticleInstance.GetComponent<ParticleSystem>().Stop();
+        Destroy(deathParticleInstance, deathParticleInstance.GetComponent<ParticleSystem>().startLifetime);
         isDead = false;
     }
 }

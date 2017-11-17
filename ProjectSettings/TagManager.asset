@@ -16,6 +16,7 @@ TagManager:
   - CatBody
   - Shard
   - GirlBody
+  - DeathParticle
   layers:
   - Default
   - TransparentFX
