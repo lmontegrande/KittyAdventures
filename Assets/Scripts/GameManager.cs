@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 
     public static GameManager instance;
-
     public List<Character> characters;
+    public GameObject startingPoint;
 
     public void Awake()
     {
@@ -31,7 +31,10 @@ public class GameManager : MonoBehaviour {
 
     public void GameOver()
     {
-        LoadLevel(SceneManager.GetActiveScene().name);
+        foreach(GameObject character in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            character.GetComponent<PlayerControlledCharacter>().Respawn(startingPoint.transform.position);
+        }
     }
 
     public void LoadLevel(string levelName)

@@ -285,4 +285,12 @@ public abstract class PlayerControlledCharacter : Character
     protected abstract void UseSkill();
 
     protected abstract void ReleaseSkill();
+
+    public void Respawn(Vector3 respawnLocation)
+    {
+        if (isDead)
+            transform.position = GameObject.FindGameObjectWithTag("Player").transform.position;
+        //transform.position = respawnLocation;
+        isDead = false;
+    }
 }
