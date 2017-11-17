@@ -8,9 +8,8 @@ public class DogMovement : Character
   public float currentSpeed = 0.01f;
   public float patrolTimeWait = 2f;
   float alarmTimeWait = 2f;
-  float checkTimeWait = 5f;
+  float checkTimeWait = 3f;
   public float sight = 1.2f;
-  public float force;
   int currentPoint;
   bool isPaused = false;
   string dogState = "patrol";  // bark, kill
@@ -47,15 +46,14 @@ public class DogMovement : Character
   void Update ()
   {
     RaycastHit2D hit = Physics2D.Raycast(transform.position, -transform.localScale.x * Vector2.right, sight, 1 << LayerMask.NameToLayer("Players") | 1 << LayerMask.NameToLayer("Enviroment"));
-
     if (dogState == "patrol")
     {
-      checkTimeWait = 5f;
+      checkTimeWait = 3f;
     }
 
     // if dog has seen the player
     //if (hit.collider != null && (hit.collider.name == "RightCollider" || hit.collider.name == "LeftCollider" || hit.collider.name == "FootCollider"))
-    if (hit.collider != null && (hit.collider.tag == "CatBody"))
+    if (hit.collider != null && hit.collider.tag == "CatBody")
     {
       if (dogState == "patrol")
       {
@@ -89,7 +87,7 @@ public class DogMovement : Character
           dogState = "kill";
         }
       }
-      else // suppose to be check
+      else // suppose to check
       {
         alarmTimeWait = 2f;
         dogState = "bark";
@@ -97,7 +95,7 @@ public class DogMovement : Character
     }
 
     // player out of the dog's sight
-    if (hit.collider == null && dogState == "bark")
+    if ((hit.collider == null || hit.collider.tag == "Floor") && dogState == "bark")
     {
       dogState = "check";
     }
@@ -106,30 +104,33 @@ public class DogMovement : Character
     {
       firstBark = true;
 
-      if (checkTimeWait <= 4f && checkTimeWait > 2f)
+      if (checkTimeWait <= 2.5f && checkTimeWait >= 1.5f)
       {
         transform.localScale = new Vector3(-Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
       }
-      if (checkTimeWait <= 2f && checkTimeWait > 0f)
+      if (checkTimeWait < 1.5f && checkTimeWait >= 0.5f)
       {
         transform.localScale = new Vector3(Mathf.Abs(transform.localScale.x), transform.localScale.y, transform.localScale.z);
       }
 
-      if (checkTimeWait <= 0.1f)
+      if (checkTimeWait <= 0f)
       {
-        checkTimeWait = 5f;
+        checkTimeWait = 3f;
         dogState = "patrol";
         anim.SetBool("Running", true);
         StartCoroutine("Patrol");
       }
 
       // player gets into sight when check
-      if (hit.collider != null && (hit.collider.name == "RightCollider" || hit.collider.name == "LeftCollider" || hit.collider.name == "FootCollider"))
+      if (hit.collider != null && hit.collider.tag == "CatBody")
       {
-        checkTimeWait = 5f;
+        checkTimeWait = 3f;
         dogState = "bark";
       }
-      checkTimeWait -= Time.deltaTime;
+      else
+      {
+        checkTimeWait -= Time.deltaTime;
+      }
     }
 
     if (dogState == "kill")
